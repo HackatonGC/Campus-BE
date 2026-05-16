@@ -1,4 +1,4 @@
-package com.hacakthon.team1.presentation.common;
+package com.hacakthon.team1.common.response;
 
 import com.hacakthon.team1.application.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
