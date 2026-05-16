@@ -6,20 +6,25 @@ import com.hacakthon.team1.config.CurrentUser;
 import com.hacakthon.team1.user.application.dto.request.ChangePasswordRequest;
 import com.hacakthon.team1.user.application.dto.request.LoginRequest;
 import com.hacakthon.team1.user.application.dto.request.SignUpRequest;
+import com.hacakthon.team1.user.application.dto.request.UpdatePortfolioRequest;
 import com.hacakthon.team1.user.application.dto.request.UpdatePrivacyRequest;
-import com.hacakthon.team1.user.application.dto.request.UpdateUserRequest;
+import com.hacakthon.team1.user.application.dto.request.UpdateUserInfoRequest;
 import com.hacakthon.team1.user.application.dto.response.ActivityResponse;
 import com.hacakthon.team1.user.application.dto.response.LoginResponse;
+import com.hacakthon.team1.user.application.dto.response.PortfolioResponse;
+import com.hacakthon.team1.user.application.dto.response.UserInfoResponse;
 import com.hacakthon.team1.user.application.dto.response.UserResponse;
 import com.hacakthon.team1.user.application.dto.response.UserStatsResponse;
 import com.hacakthon.team1.user.application.usecase.ChangePasswordUseCase;
 import com.hacakthon.team1.user.application.usecase.DeleteUserUseCase;
+import com.hacakthon.team1.user.application.usecase.GetPortfolioUseCase;
 import com.hacakthon.team1.user.application.usecase.GetUserUseCase;
 import com.hacakthon.team1.user.application.usecase.LoginUseCase;
 import com.hacakthon.team1.user.application.usecase.LogoutUseCase;
 import com.hacakthon.team1.user.application.usecase.SignUpUseCase;
 import com.hacakthon.team1.user.application.usecase.GetActivityUseCase;
 import com.hacakthon.team1.user.application.usecase.GetUserStatsUseCase;
+import com.hacakthon.team1.user.application.usecase.UpdatePortfolioUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdatePrivacyUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdateUserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,6 +52,8 @@ public class UserController {
     private final UpdatePrivacyUseCase updatePrivacyUseCase;
     private final GetActivityUseCase getActivityUseCase;
     private final GetUserStatsUseCase getUserStatsUseCase;
+    private final GetPortfolioUseCase getPortfolioUseCase;
+    private final UpdatePortfolioUseCase updatePortfolioUseCase;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
@@ -72,20 +79,37 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "유저 정보 조회")
-    public ResponseEntity<CommonResponse<UserResponse>> getUser(@PathVariable Long id) {
-        UserResponse response = getUserUseCase.get(id);
+    @Operation(summary = "개인정보 조회")
+    public ResponseEntity<CommonResponse<UserInfoResponse>> getUser(@PathVariable Long id) {
+        UserInfoResponse response = getUserUseCase.get(id);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_FOUND, response));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "프로필 수정")
-    public ResponseEntity<CommonResponse<UserResponse>> updateUser(
+    @Operation(summary = "개인정보 수정")
+    public ResponseEntity<CommonResponse<UserInfoResponse>> updateUser(
             @PathVariable Long id,
             @CurrentUser Long currentUserId,
-            @RequestBody UpdateUserRequest request) {
-        UserResponse response = updateUserUseCase.update(id, currentUserId, request);
+            @RequestBody UpdateUserInfoRequest request) {
+        UserInfoResponse response = updateUserUseCase.update(id, currentUserId, request);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_UPDATED, response));
+    }
+
+    @GetMapping("/{id}/portfolio")
+    @Operation(summary = "포트폴리오 조회")
+    public ResponseEntity<CommonResponse<PortfolioResponse>> getPortfolio(@PathVariable Long id) {
+        PortfolioResponse response = getPortfolioUseCase.get(id);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PORTFOLIO_FOUND, response));
+    }
+
+    @PutMapping("/{id}/portfolio")
+    @Operation(summary = "포트폴리오 수정")
+    public ResponseEntity<CommonResponse<PortfolioResponse>> updatePortfolio(
+            @PathVariable Long id,
+            @CurrentUser Long currentUserId,
+            @RequestBody UpdatePortfolioRequest request) {
+        PortfolioResponse response = updatePortfolioUseCase.update(id, currentUserId, request);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PORTFOLIO_UPDATED, response));
     }
 
     @PatchMapping("/{id}/password")
