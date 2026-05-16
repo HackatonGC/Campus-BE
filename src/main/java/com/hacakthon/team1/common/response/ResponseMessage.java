@@ -46,7 +46,13 @@ public enum ResponseMessage {
     REVIEW_ANSWER_LIST_FOUND(200, "코드 리뷰 답변 목록 조회에 성공했습니다."),
 
     EMAIL_CODE_SENT(200, "인증 코드가 발송되었습니다."),
-    EMAIL_CODE_VERIFIED(200, "이메일 인증이 완료되었습니다.");
+    EMAIL_CODE_VERIFIED(200, "이메일 인증이 완료되었습니다."),
+
+    COMMENT_CREATED(201, "댓글이 작성되었습니다."),
+    COMMENT_DELETED(200, "댓글이 삭제되었습니다."),
+    COMMENT_LIST_FOUND(200, "댓글 목록 조회에 성공했습니다."),
+    COMMENT_LIKED(201, "댓글 좋아요가 추가되었습니다."),
+    COMMENT_UNLIKED(200, "댓글 좋아요가 취소되었습니다.");
 
     private final int status;
     private final String message;
