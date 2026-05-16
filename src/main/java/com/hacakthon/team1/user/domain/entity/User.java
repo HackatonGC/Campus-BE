@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -26,22 +29,26 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String studentId;
+    @Column(nullable = false)
+    private String school;
 
     @Column(nullable = false)
     private String department;
 
-    @Column(nullable = false)
-    private int grade;
+    @ElementCollection
+    @CollectionTable(name = "user_tech_stacks", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "tech_stack")
+    private List<String> techStacks = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, String studentId, String department, int grade) {
+    public User(String email, String password, String name, String school, String department, List<String> techStacks) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.studentId = studentId;
+        this.school = school;
         this.department = department;
-        this.grade = grade;
+        if (techStacks != null) {
+            this.techStacks = techStacks;
+        }
     }
 }

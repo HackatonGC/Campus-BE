@@ -10,9 +10,9 @@ public class UserMapper {
                 user.getId(),
                 user.getEmail(),
                 user.getName(),
-                user.getStudentId(),
+                user.getSchool(),
                 user.getDepartment(),
-                user.getGrade()
+                user.getTechStacks()
         );
     }
 }

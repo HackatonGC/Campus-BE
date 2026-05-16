@@ -1,10 +1,12 @@
 package com.hacakthon.team1.user.application.dto.response;
 
+import java.util.List;
+
 public record UserResponse(
         Long id,
         String email,
         String name,
-        String studentId,
+        String school,
         String department,
-        int grade
+        List<String> techStacks
 ) {}

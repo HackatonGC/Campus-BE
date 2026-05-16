@@ -29,9 +29,9 @@ public class SignUpUseCase {
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .name(request.name())
-                .studentId(request.studentId())
+                .school(request.school())
                 .department(request.department())
-                .grade(request.grade())
+                .techStacks(request.techStacks())
                 .build();
 
         return UserMapper.toResponse(userSaveService.save(user));
