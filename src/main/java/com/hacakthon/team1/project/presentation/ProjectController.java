@@ -37,8 +37,10 @@ public class ProjectController {
 
     @PostMapping
     @Operation(summary = "프로젝트 등록")
-    public ResponseEntity<CommonResponse<ProjectResponse>> create(@RequestBody CreateProjectRequest request) {
-        ProjectResponse response = createProjectUseCase.create(request);
+    public ResponseEntity<CommonResponse<ProjectResponse>> create(
+            @CurrentUser Long userId,
+            @RequestBody CreateProjectRequest request) {
+        ProjectResponse response = createProjectUseCase.create(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.success(ResponseMessage.PROJECT_CREATED, response));
     }
