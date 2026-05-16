@@ -13,7 +13,7 @@ public record TeamApplicationResponse(
         Long projectId,
         String projectTitle,
         String projectSummary,
-        List<String> projectTechStacks,
+        List<String> techStacks,
         ProjectStatus projectStatus,
         String projectAuthorName,
         String role,
