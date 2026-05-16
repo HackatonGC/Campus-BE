@@ -42,6 +42,9 @@ public enum ResponseMessage {
     REVIEW_REQUEST_FOUND(200, "코드 리뷰 요청 조회에 성공했습니다."),
     REVIEW_REQUEST_LIST_FOUND(200, "코드 리뷰 요청 목록 조회에 성공했습니다."),
 
+    REVIEW_ANSWER_CREATED(201, "코드 리뷰 답변이 등록되었습니다."),
+    REVIEW_ANSWER_LIST_FOUND(200, "코드 리뷰 답변 목록 조회에 성공했습니다."),
+
     COMMENT_CREATED(201, "댓글이 작성되었습니다."),
     COMMENT_DELETED(200, "댓글이 삭제되었습니다."),
     COMMENT_LIST_FOUND(200, "댓글 목록 조회에 성공했습니다."),
