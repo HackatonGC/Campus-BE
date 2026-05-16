@@ -2,12 +2,14 @@ package com.hacakthon.team1.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtProvider {
 
@@ -59,6 +61,7 @@ public class JwtProvider {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
             return true;
         } catch (Exception e) {
+            log.warn("[JWT] 토큰 검증 실패: {} - {}", e.getClass().getSimpleName(), e.getMessage());
             return false;
         }
     }
