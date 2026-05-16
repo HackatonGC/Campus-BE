@@ -85,6 +85,14 @@ public class Project extends BaseEntity {
         this.viewCount++;
     }
 
+    public void incrementLikeCount() {
+        this.likeCount++;
+    }
+
+    public void decrementLikeCount() {
+        if (this.likeCount > 0) this.likeCount--;
+    }
+
     public void addRecruitment(Recruitment recruitment) {
         this.recruitments.add(recruitment);
     }

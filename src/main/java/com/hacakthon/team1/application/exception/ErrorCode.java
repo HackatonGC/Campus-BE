@@ -19,6 +19,8 @@ public enum ErrorCode {
     PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 프로젝트입니다."),
     DUPLICATE_BOOKMARK(HttpStatus.CONFLICT, "이미 북마크한 프로젝트입니다."),
     BOOKMARK_NOT_FOUND(HttpStatus.NOT_FOUND, "북마크를 찾을 수 없습니다."),
+    DUPLICATE_LIKE(HttpStatus.CONFLICT, "이미 좋아요한 프로젝트입니다."),
+    LIKE_NOT_FOUND(HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다."),
     PROJECT_NOT_RECRUITING(HttpStatus.BAD_REQUEST, "모집 중인 프로젝트가 아닙니다."),
     REVIEW_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 요청입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
