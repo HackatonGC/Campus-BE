@@ -13,6 +13,8 @@ public enum ResponseMessage {
     USER_SIGNUP(201, "회원가입이 완료되었습니다."),
     USER_LOGIN(200, "로그인이 완료되었습니다."),
     USER_LOGOUT(200, "로그아웃이 완료되었습니다."),
+    USER_FOUND(200, "유저 정보 조회에 성공했습니다."),
+    USER_UPDATED(200, "프로필이 수정되었습니다."),
     USER_DELETED(200, "회원탈퇴가 완료되었습니다."),
 
     PROJECT_CREATED(201, "프로젝트가 등록되었습니다."),

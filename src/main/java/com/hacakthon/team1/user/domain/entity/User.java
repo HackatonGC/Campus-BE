@@ -51,4 +51,11 @@ public class User extends BaseEntity {
             this.techStacks = techStacks;
         }
     }
+
+    public void update(String name, String school, String department, List<String> techStacks) {
+        this.name = name;
+        this.school = school;
+        this.department = department;
+        this.techStacks = techStacks != null ? techStacks : new ArrayList<>();
+    }
 }
