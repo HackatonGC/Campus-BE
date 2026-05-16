@@ -1,5 +1,6 @@
 package com.hacakthon.team1.project.application.dto.request;
 
+import com.hacakthon.team1.project.domain.entity.MeetingType;
 import com.hacakthon.team1.project.domain.entity.ProjectStatus;
 import com.hacakthon.team1.project.domain.entity.ProjectType;
 
@@ -19,17 +20,19 @@ public record CreateProjectRequest(
         String figmaUrl,
         String notionUrl,
         // 모집 관련
-        String expectedDuration,
-        String progressMethod,
-        LocalDate recruitmentDeadline,
-        String recruitmentMessage,
+        String duration,
+        MeetingType meetingType,
+        LocalDate deadline,
+        String recruitMessage,
         List<RecruitmentRequest> recruitments,
         // 완료 관련
-        String projectDuration,
+        LocalDate startDate,
+        LocalDate endDate,
         String myRole,
-        String mainFeatures,
+        String features,
         List<String> demoImages,
-        String hardships,
-        String learnings,
-        String messageToJuniors
+        String hardPart,
+        String learned,
+        String messageToJunior,
+        List<TeamMemberRequest> teamMembers
 ) {}

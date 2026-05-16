@@ -7,10 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "recruitments")
+@Table(name = "team_members")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Recruitment {
+public class TeamMember {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +26,10 @@ public class Recruitment {
     @Column(nullable = false)
     private int count;
 
-    private String skills;
-
-    private String description;
-
     @Builder
-    public Recruitment(Project project, String role, int count, String skills, String description) {
+    public TeamMember(Project project, String role, int count) {
         this.project = project;
         this.role = role;
         this.count = count;
-        this.skills = skills;
-        this.description = description;
     }
 }

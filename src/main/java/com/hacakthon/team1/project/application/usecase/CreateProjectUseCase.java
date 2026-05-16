@@ -7,6 +7,7 @@ import com.hacakthon.team1.project.application.dto.response.ProjectResponse;
 import com.hacakthon.team1.project.application.mapper.ProjectMapper;
 import com.hacakthon.team1.project.domain.entity.Project;
 import com.hacakthon.team1.project.domain.entity.Recruitment;
+import com.hacakthon.team1.project.domain.entity.TeamMember;
 import com.hacakthon.team1.project.domain.service.ProjectSaveService;
 import com.hacakthon.team1.user.domain.entity.User;
 import com.hacakthon.team1.user.domain.repository.UserRepository;
@@ -39,32 +40,42 @@ public class CreateProjectUseCase {
                 .deployUrl(request.deployUrl())
                 .figmaUrl(request.figmaUrl())
                 .notionUrl(request.notionUrl())
-                .expectedDuration(request.expectedDuration())
-                .progressMethod(request.progressMethod())
-                .recruitmentDeadline(request.recruitmentDeadline())
-                .recruitmentMessage(request.recruitmentMessage())
-                .projectDuration(request.projectDuration())
+                .duration(request.duration())
+                .meetingType(request.meetingType())
+                .deadline(request.deadline())
+                .recruitMessage(request.recruitMessage())
+                .startDate(request.startDate())
+                .endDate(request.endDate())
                 .myRole(request.myRole())
-                .mainFeatures(request.mainFeatures())
+                .features(request.features())
                 .demoImages(request.demoImages())
-                .hardships(request.hardships())
-                .learnings(request.learnings())
-                .messageToJuniors(request.messageToJuniors())
+                .hardPart(request.hardPart())
+                .learned(request.learned())
+                .messageToJunior(request.messageToJunior())
                 .build();
 
         Project savedProject = projectSaveService.save(project);
 
         if (request.recruitments() != null) {
-            request.recruitments().forEach(r -> {
-                Recruitment recruitment = Recruitment.builder()
-                        .project(savedProject)
-                        .role(r.role())
-                        .count(r.count())
-                        .requiredSkills(r.requiredSkills())
-                        .description(r.description())
-                        .build();
-                savedProject.addRecruitment(recruitment);
-            });
+            request.recruitments().forEach(r -> savedProject.addRecruitment(
+                    Recruitment.builder()
+                            .project(savedProject)
+                            .role(r.role())
+                            .count(r.count())
+                            .skills(r.skills())
+                            .description(r.description())
+                            .build()
+            ));
+        }
+
+        if (request.teamMembers() != null) {
+            request.teamMembers().forEach(m -> savedProject.addTeamMember(
+                    TeamMember.builder()
+                            .project(savedProject)
+                            .role(m.role())
+                            .count(m.count())
+                            .build()
+            ));
         }
 
         return ProjectMapper.toResponse(savedProject, 0, 0);

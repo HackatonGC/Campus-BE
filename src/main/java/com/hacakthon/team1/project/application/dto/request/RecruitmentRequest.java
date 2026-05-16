@@ -3,6 +3,6 @@ package com.hacakthon.team1.project.application.dto.request;
 public record RecruitmentRequest(
         String role,
         int count,
-        String requiredSkills,
+        String skills,
         String description
 ) {}
