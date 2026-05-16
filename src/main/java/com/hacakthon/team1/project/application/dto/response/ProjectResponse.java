@@ -21,6 +21,8 @@ public record ProjectResponse(
         String notionUrl,
         int viewCount,
         int likeCount,
+        long commentCount,
+        long totalApplicationCount,
         String authorName,
         String authorSchool,
         List<RecruitmentResponse> recruitments,

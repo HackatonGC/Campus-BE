@@ -25,7 +25,7 @@ public class ProjectMapper {
         );
     }
 
-    public static ProjectResponse toResponse(Project project) {
+    public static ProjectResponse toResponse(Project project, long commentCount, long totalApplicationCount) {
         List<RecruitmentResponse> recruitments = project.getRecruitments().stream()
                 .map(r -> new RecruitmentResponse(r.getId(), r.getRole(), r.getCount(), r.getDescription()))
                 .toList();
@@ -45,6 +45,8 @@ public class ProjectMapper {
                 project.getNotionUrl(),
                 project.getViewCount(),
                 project.getLikeCount(),
+                commentCount,
+                totalApplicationCount,
                 project.getUser().getName(),
                 project.getUser().getSchool(),
                 recruitments,
