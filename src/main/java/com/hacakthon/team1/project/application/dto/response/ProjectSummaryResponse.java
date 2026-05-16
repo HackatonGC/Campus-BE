@@ -15,6 +15,7 @@ public record ProjectSummaryResponse(
         String thumbnailUrl,
         int viewCount,
         int likeCount,
+        Long authorId,
         String authorName,
         String authorSchool
 ) {}

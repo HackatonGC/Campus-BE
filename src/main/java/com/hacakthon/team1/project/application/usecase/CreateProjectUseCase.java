@@ -55,6 +55,6 @@ public class CreateProjectUseCase {
             });
         }
 
-        return ProjectMapper.toResponse(savedProject);
+        return ProjectMapper.toResponse(savedProject, 0, 0);
     }
 }
