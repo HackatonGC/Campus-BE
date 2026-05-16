@@ -40,6 +40,22 @@ public class User extends BaseEntity {
     @Column(name = "tech_stack")
     private List<String> techStacks = new ArrayList<>();
 
+    @Column(columnDefinition = "TEXT")
+    private String bio;
+
+    private String githubUrl;
+    private String blogUrl;
+    private String portfolioUrl;
+
+    @Column(nullable = false)
+    private boolean isProjectPublic = true;
+
+    @Column(nullable = false)
+    private boolean isProfilePublic = true;
+
+    @Column(nullable = false)
+    private boolean isActivityPublic = false;
+
     @Builder
     public User(String email, String password, String name, String school, String department, List<String> techStacks) {
         this.email = email;
@@ -52,10 +68,25 @@ public class User extends BaseEntity {
         }
     }
 
-    public void update(String name, String school, String department, List<String> techStacks) {
+    public void update(String name, String school, String department, List<String> techStacks,
+                       String bio, String githubUrl, String blogUrl, String portfolioUrl) {
         this.name = name;
         this.school = school;
         this.department = department;
         this.techStacks = techStacks != null ? techStacks : new ArrayList<>();
+        this.bio = bio;
+        this.githubUrl = githubUrl;
+        this.blogUrl = blogUrl;
+        this.portfolioUrl = portfolioUrl;
+    }
+
+    public void updatePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
+    public void updatePrivacy(boolean isProjectPublic, boolean isProfilePublic, boolean isActivityPublic) {
+        this.isProjectPublic = isProjectPublic;
+        this.isProfilePublic = isProfilePublic;
+        this.isActivityPublic = isActivityPublic;
     }
 }

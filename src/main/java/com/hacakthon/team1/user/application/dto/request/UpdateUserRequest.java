@@ -6,5 +6,9 @@ public record UpdateUserRequest(
         String name,
         String school,
         String department,
-        List<String> techStacks
+        List<String> techStacks,
+        String bio,
+        String githubUrl,
+        String blogUrl,
+        String portfolioUrl
 ) {}

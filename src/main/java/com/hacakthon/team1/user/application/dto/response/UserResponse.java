@@ -10,5 +10,12 @@ public record UserResponse(
         String school,
         String department,
         List<String> techStacks,
+        String bio,
+        String githubUrl,
+        String blogUrl,
+        String portfolioUrl,
+        boolean isProjectPublic,
+        boolean isProfilePublic,
+        boolean isActivityPublic,
         LocalDateTime createdAt
 ) {}

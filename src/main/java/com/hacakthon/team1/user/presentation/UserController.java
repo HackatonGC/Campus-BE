@@ -6,12 +6,16 @@ import com.hacakthon.team1.user.application.dto.request.LoginRequest;
 import com.hacakthon.team1.user.application.dto.request.SignUpRequest;
 import com.hacakthon.team1.user.application.dto.response.LoginResponse;
 import com.hacakthon.team1.user.application.dto.response.UserResponse;
+import com.hacakthon.team1.user.application.dto.request.ChangePasswordRequest;
+import com.hacakthon.team1.user.application.dto.request.UpdatePrivacyRequest;
 import com.hacakthon.team1.user.application.dto.request.UpdateUserRequest;
+import com.hacakthon.team1.user.application.usecase.ChangePasswordUseCase;
 import com.hacakthon.team1.user.application.usecase.DeleteUserUseCase;
 import com.hacakthon.team1.user.application.usecase.GetUserUseCase;
 import com.hacakthon.team1.user.application.usecase.LoginUseCase;
 import com.hacakthon.team1.user.application.usecase.LogoutUseCase;
 import com.hacakthon.team1.user.application.usecase.SignUpUseCase;
+import com.hacakthon.team1.user.application.usecase.UpdatePrivacyUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdateUserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +37,8 @@ public class UserController {
     private final DeleteUserUseCase deleteUserUseCase;
     private final GetUserUseCase getUserUseCase;
     private final UpdateUserUseCase updateUserUseCase;
+    private final ChangePasswordUseCase changePasswordUseCase;
+    private final UpdatePrivacyUseCase updatePrivacyUseCase;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
@@ -72,6 +78,24 @@ public class UserController {
             @RequestBody UpdateUserRequest request) {
         UserResponse response = updateUserUseCase.update(id, requesterId, request);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_UPDATED, response));
+    }
+
+    @PatchMapping("/{id}/password")
+    @Operation(summary = "비밀번호 변경")
+    public ResponseEntity<CommonResponse<Void>> changePassword(
+            @PathVariable Long id,
+            @RequestBody ChangePasswordRequest request) {
+        changePasswordUseCase.changePassword(id, request);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_PASSWORD_CHANGED, null));
+    }
+
+    @PutMapping("/{id}/privacy")
+    @Operation(summary = "공개 범위 설정")
+    public ResponseEntity<CommonResponse<UserResponse>> updatePrivacy(
+            @PathVariable Long id,
+            @RequestBody UpdatePrivacyRequest request) {
+        UserResponse response = updatePrivacyUseCase.updatePrivacy(id, request);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_PRIVACY_UPDATED, response));
     }
 
     @DeleteMapping("/{id}")
