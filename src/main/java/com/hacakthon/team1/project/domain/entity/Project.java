@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "projects")
@@ -53,6 +54,9 @@ public class Project extends BaseEntity {
     private String figmaUrl;
     private String notionUrl;
 
+    @Column(nullable = false, unique = true, updatable = false)
+    private String shareToken;
+
     @Column(nullable = false)
     private int viewCount = 0;
 
@@ -79,6 +83,7 @@ public class Project extends BaseEntity {
         this.deployUrl = deployUrl;
         this.figmaUrl = figmaUrl;
         this.notionUrl = notionUrl;
+        this.shareToken = UUID.randomUUID().toString();
     }
 
     public void incrementViewCount() {

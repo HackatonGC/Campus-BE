@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findAllByUserId(Long userId);
+
+    java.util.Optional<Project> findByShareToken(String shareToken);
 }

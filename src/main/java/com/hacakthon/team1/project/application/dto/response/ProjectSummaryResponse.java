@@ -7,6 +7,7 @@ import java.util.List;
 
 public record ProjectSummaryResponse(
         Long id,
+        String shareToken,
         String title,
         String summary,
         List<String> techStacks,

@@ -12,6 +12,7 @@ public class ProjectMapper {
     public static ProjectSummaryResponse toSummaryResponse(Project project) {
         return new ProjectSummaryResponse(
                 project.getId(),
+                project.getShareToken(),
                 project.getTitle(),
                 project.getSummary(),
                 project.getTechStacks(),
@@ -33,6 +34,7 @@ public class ProjectMapper {
 
         return new ProjectResponse(
                 project.getId(),
+                project.getShareToken(),
                 project.getTitle(),
                 project.getSummary(),
                 project.getDescription(),

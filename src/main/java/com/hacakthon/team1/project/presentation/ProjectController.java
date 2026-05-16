@@ -8,6 +8,7 @@ import com.hacakthon.team1.project.application.dto.response.ProjectSummaryRespon
 import com.hacakthon.team1.project.application.dto.request.UpdateProjectRequest;
 import com.hacakthon.team1.project.application.usecase.CreateProjectUseCase;
 import com.hacakthon.team1.project.application.usecase.DeleteProjectUseCase;
+import com.hacakthon.team1.project.application.usecase.GetProjectByShareTokenUseCase;
 import com.hacakthon.team1.project.application.usecase.GetProjectListUseCase;
 import com.hacakthon.team1.project.application.usecase.GetProjectUseCase;
 import com.hacakthon.team1.project.application.usecase.UpdateProjectUseCase;
@@ -32,6 +33,7 @@ public class ProjectController {
     private final GetProjectListUseCase getProjectListUseCase;
     private final DeleteProjectUseCase deleteProjectUseCase;
     private final UpdateProjectUseCase updateProjectUseCase;
+    private final GetProjectByShareTokenUseCase getProjectByShareTokenUseCase;
 
     @PostMapping
     @Operation(summary = "프로젝트 등록")
@@ -75,6 +77,13 @@ public class ProjectController {
             @CurrentUser Long userId) {
         ProjectResponse response = updateProjectUseCase.update(id, userId, request);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_UPDATED, response));
+    }
+
+    @GetMapping("/share/{shareToken}")
+    @Operation(summary = "공유 링크로 프로젝트 조회")
+    public ResponseEntity<CommonResponse<ProjectResponse>> getByShareToken(@PathVariable String shareToken) {
+        ProjectResponse response = getProjectByShareTokenUseCase.get(shareToken);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_FOUND, response));
     }
 
     @DeleteMapping("/{id}")
