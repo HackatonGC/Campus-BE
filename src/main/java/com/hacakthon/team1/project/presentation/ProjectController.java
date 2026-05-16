@@ -5,10 +5,13 @@ import com.hacakthon.team1.common.response.ResponseMessage;
 import com.hacakthon.team1.project.application.dto.request.CreateProjectRequest;
 import com.hacakthon.team1.project.application.dto.response.ProjectResponse;
 import com.hacakthon.team1.project.application.dto.response.ProjectSummaryResponse;
+import com.hacakthon.team1.project.application.dto.request.UpdateProjectRequest;
 import com.hacakthon.team1.project.application.usecase.CreateProjectUseCase;
 import com.hacakthon.team1.project.application.usecase.DeleteProjectUseCase;
 import com.hacakthon.team1.project.application.usecase.GetProjectListUseCase;
 import com.hacakthon.team1.project.application.usecase.GetProjectUseCase;
+import com.hacakthon.team1.project.application.usecase.UpdateProjectUseCase;
+import com.hacakthon.team1.config.CurrentUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class ProjectController {
     private final GetProjectUseCase getProjectUseCase;
     private final GetProjectListUseCase getProjectListUseCase;
     private final DeleteProjectUseCase deleteProjectUseCase;
+    private final UpdateProjectUseCase updateProjectUseCase;
 
     @PostMapping
     @Operation(summary = "프로젝트 등록")
@@ -61,6 +65,16 @@ public class ProjectController {
     public ResponseEntity<CommonResponse<ProjectResponse>> get(@PathVariable Long id) {
         ProjectResponse response = getProjectUseCase.get(id);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_FOUND, response));
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "프로젝트 수정")
+    public ResponseEntity<CommonResponse<ProjectResponse>> update(
+            @PathVariable Long id,
+            @RequestBody UpdateProjectRequest request,
+            @CurrentUser Long userId) {
+        ProjectResponse response = updateProjectUseCase.update(id, userId, request);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_UPDATED, response));
     }
 
     @DeleteMapping("/{id}")

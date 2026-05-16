@@ -8,6 +8,7 @@ import com.hacakthon.team1.user.application.dto.request.LoginRequest;
 import com.hacakthon.team1.user.application.dto.request.SignUpRequest;
 import com.hacakthon.team1.user.application.dto.request.UpdatePrivacyRequest;
 import com.hacakthon.team1.user.application.dto.request.UpdateUserRequest;
+import com.hacakthon.team1.user.application.dto.response.ActivityResponse;
 import com.hacakthon.team1.user.application.dto.response.LoginResponse;
 import com.hacakthon.team1.user.application.dto.response.UserResponse;
 import com.hacakthon.team1.user.application.usecase.ChangePasswordUseCase;
@@ -16,6 +17,7 @@ import com.hacakthon.team1.user.application.usecase.GetUserUseCase;
 import com.hacakthon.team1.user.application.usecase.LoginUseCase;
 import com.hacakthon.team1.user.application.usecase.LogoutUseCase;
 import com.hacakthon.team1.user.application.usecase.SignUpUseCase;
+import com.hacakthon.team1.user.application.usecase.GetActivityUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdatePrivacyUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdateUserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -39,6 +43,7 @@ public class UserController {
     private final UpdateUserUseCase updateUserUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
     private final UpdatePrivacyUseCase updatePrivacyUseCase;
+    private final GetActivityUseCase getActivityUseCase;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
@@ -96,6 +101,14 @@ public class UserController {
             @RequestBody UpdatePrivacyRequest request) {
         UserResponse response = updatePrivacyUseCase.updatePrivacy(id, request);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_PRIVACY_UPDATED, response));
+    }
+
+    @GetMapping("/me/activities")
+    @Operation(summary = "내 최근 활동 조회")
+    public ResponseEntity<CommonResponse<List<ActivityResponse>>> getActivities(
+            @CurrentUser Long userId) {
+        List<ActivityResponse> response = getActivityUseCase.getActivities(userId);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.ACTIVITY_LIST_FOUND, response));
     }
 
     @DeleteMapping("/{id}")
