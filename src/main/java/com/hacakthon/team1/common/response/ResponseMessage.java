@@ -28,6 +28,10 @@ public enum ResponseMessage {
     BOOKMARK_REMOVED(200, "북마크가 삭제되었습니다."),
     BOOKMARK_LIST_FOUND(200, "북마크 목록 조회에 성공했습니다."),
 
+    LIKE_ADDED(201, "좋아요가 추가되었습니다."),
+    LIKE_REMOVED(200, "좋아요가 삭제되었습니다."),
+    LIKE_LIST_FOUND(200, "좋아요 목록 조회에 성공했습니다."),
+
     APPLICATION_CREATED(201, "팀원 신청이 완료되었습니다."),
     APPLICATION_STATUS_UPDATED(200, "신청 상태가 변경되었습니다."),
     APPLICATION_CANCELED(200, "신청이 취소되었습니다."),
