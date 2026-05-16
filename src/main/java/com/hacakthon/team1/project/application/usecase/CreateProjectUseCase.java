@@ -78,6 +78,6 @@ public class CreateProjectUseCase {
             ));
         }
 
-        return ProjectMapper.toResponse(savedProject, 0, 0);
+        return ProjectMapper.toResponse(savedProject, 0, 0, java.util.Map.of());
     }
 }

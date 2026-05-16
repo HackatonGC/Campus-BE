@@ -71,6 +71,11 @@ public class UpdateProjectUseCase {
 
         long commentCount = commentRepository.countByProjectId(projectId);
         long totalApplicationCount = teamApplicationRepository.countByProjectId(projectId);
-        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount);
+        java.util.Map<Long, Long> acceptedCountMap = project.getRecruitments().stream()
+                .collect(java.util.stream.Collectors.toMap(
+                        r -> r.getId(),
+                        r -> teamApplicationRepository.countByRecruitmentIdAndStatus(r.getId(), com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus.ACCEPTED)
+                ));
+        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap);
     }
 }
