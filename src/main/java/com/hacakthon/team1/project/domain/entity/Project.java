@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -54,6 +55,35 @@ public class Project extends BaseEntity {
     private String figmaUrl;
     private String notionUrl;
 
+    // 모집 관련 필드
+    private String expectedDuration;
+    private String progressMethod;
+    private LocalDate recruitmentDeadline;
+
+    @Column(columnDefinition = "TEXT")
+    private String recruitmentMessage;
+
+    // 완료 관련 필드
+    private String projectDuration;
+    private String myRole;
+
+    @Column(columnDefinition = "TEXT")
+    private String mainFeatures;
+
+    @ElementCollection
+    @CollectionTable(name = "project_demo_images", joinColumns = @JoinColumn(name = "project_id"))
+    @Column(name = "demo_image_url")
+    private List<String> demoImages = new ArrayList<>();
+
+    @Column(columnDefinition = "TEXT")
+    private String hardships;
+
+    @Column(columnDefinition = "TEXT")
+    private String learnings;
+
+    @Column(columnDefinition = "TEXT")
+    private String messageToJuniors;
+
     @Column(nullable = false, unique = true, updatable = false)
     private String shareToken;
 
@@ -70,7 +100,11 @@ public class Project extends BaseEntity {
     public Project(User user, String title, String summary, String description,
                    List<String> techStacks, ProjectStatus status, ProjectType projectType,
                    String thumbnailUrl, String githubUrl, String deployUrl,
-                   String figmaUrl, String notionUrl) {
+                   String figmaUrl, String notionUrl,
+                   String expectedDuration, String progressMethod, LocalDate recruitmentDeadline,
+                   String recruitmentMessage,
+                   String projectDuration, String myRole, String mainFeatures,
+                   List<String> demoImages, String hardships, String learnings, String messageToJuniors) {
         this.user = user;
         this.title = title;
         this.summary = summary;
@@ -83,6 +117,17 @@ public class Project extends BaseEntity {
         this.deployUrl = deployUrl;
         this.figmaUrl = figmaUrl;
         this.notionUrl = notionUrl;
+        this.expectedDuration = expectedDuration;
+        this.progressMethod = progressMethod;
+        this.recruitmentDeadline = recruitmentDeadline;
+        this.recruitmentMessage = recruitmentMessage;
+        this.projectDuration = projectDuration;
+        this.myRole = myRole;
+        this.mainFeatures = mainFeatures;
+        if (demoImages != null) this.demoImages = demoImages;
+        this.hardships = hardships;
+        this.learnings = learnings;
+        this.messageToJuniors = messageToJuniors;
         this.shareToken = UUID.randomUUID().toString();
     }
 
@@ -100,7 +145,11 @@ public class Project extends BaseEntity {
 
     public void update(String title, String summary, String description, List<String> techStacks,
                        ProjectStatus status, ProjectType projectType, String thumbnailUrl,
-                       String githubUrl, String deployUrl, String figmaUrl, String notionUrl) {
+                       String githubUrl, String deployUrl, String figmaUrl, String notionUrl,
+                       String expectedDuration, String progressMethod, LocalDate recruitmentDeadline,
+                       String recruitmentMessage,
+                       String projectDuration, String myRole, String mainFeatures,
+                       List<String> demoImages, String hardships, String learnings, String messageToJuniors) {
         this.title = title;
         this.summary = summary;
         this.description = description;
@@ -112,6 +161,17 @@ public class Project extends BaseEntity {
         this.deployUrl = deployUrl;
         this.figmaUrl = figmaUrl;
         this.notionUrl = notionUrl;
+        this.expectedDuration = expectedDuration;
+        this.progressMethod = progressMethod;
+        this.recruitmentDeadline = recruitmentDeadline;
+        this.recruitmentMessage = recruitmentMessage;
+        this.projectDuration = projectDuration;
+        this.myRole = myRole;
+        this.mainFeatures = mainFeatures;
+        this.demoImages = demoImages != null ? demoImages : new ArrayList<>();
+        this.hardships = hardships;
+        this.learnings = learnings;
+        this.messageToJuniors = messageToJuniors;
     }
 
     public void clearRecruitments() {
