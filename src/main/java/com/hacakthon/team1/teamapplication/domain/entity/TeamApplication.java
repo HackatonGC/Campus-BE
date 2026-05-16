@@ -26,6 +26,9 @@ public class TeamApplication extends BaseEntity {
     private Long projectId;
 
     @Column
+    private Long recruitmentId;
+
+    @Column
     private String role;
 
     @Column
@@ -36,9 +39,10 @@ public class TeamApplication extends BaseEntity {
     private ApplicationStatus status;
 
     @Builder
-    public TeamApplication(User user, Long projectId, String role, String message) {
+    public TeamApplication(User user, Long projectId, Long recruitmentId, String role, String message) {
         this.user = user;
         this.projectId = projectId;
+        this.recruitmentId = recruitmentId;
         this.role = role;
         this.message = message;
         this.status = ApplicationStatus.PENDING;
