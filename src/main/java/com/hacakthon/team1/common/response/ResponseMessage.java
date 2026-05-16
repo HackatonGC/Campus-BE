@@ -1,4 +1,4 @@
-package com.hacakthon.team1.presentation.common;
+package com.hacakthon.team1.common.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,8 @@ public enum ResponseMessage {
 
     OK(200, "요청이 성공했습니다."),
     CREATED(201, "생성되었습니다."),
+
+    USER_SIGNUP(201, "회원가입이 완료되었습니다."),
 
     PROJECT_CREATED(201, "프로젝트가 등록되었습니다."),
     PROJECT_FOUND(200, "프로젝트 조회에 성공했습니다."),

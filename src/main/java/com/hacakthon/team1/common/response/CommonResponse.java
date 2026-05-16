@@ -1,4 +1,4 @@
-package com.hacakthon.team1.presentation.common;
+package com.hacakthon.team1.common.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
