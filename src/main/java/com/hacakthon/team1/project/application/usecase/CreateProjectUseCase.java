@@ -22,8 +22,8 @@ public class CreateProjectUseCase {
     private final UserRepository userRepository;
 
     @Transactional
-    public ProjectResponse create(CreateProjectRequest request) {
-        User user = userRepository.findById(request.userId())
+    public ProjectResponse create(Long userId, CreateProjectRequest request) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
         Project project = Project.builder()

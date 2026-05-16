@@ -6,7 +6,6 @@ import com.hacakthon.team1.project.domain.entity.ProjectType;
 import java.util.List;
 
 public record CreateProjectRequest(
-        Long userId,
         String title,
         String summary,
         String description,
