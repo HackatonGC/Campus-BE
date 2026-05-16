@@ -24,7 +24,7 @@ public class ProjectQueryService {
         return projectRepository.findAll();
     }
 
-    public List<Project> search(String keyword, List<String> techStacks, boolean recruitingOnly, String sort) {
+    public List<Project> search(String keyword, List<String> techStacks, com.hacakthon.team1.project.domain.entity.ProjectStatus status, String sort) {
         java.util.Comparator<Project> comparator = "popular".equalsIgnoreCase(sort)
                 ? java.util.Comparator.comparingInt(Project::getLikeCount).reversed()
                 : java.util.Comparator.comparing(Project::getCreatedAt).reversed();
@@ -35,7 +35,7 @@ public class ProjectQueryService {
                         p.getTechStacks().stream().anyMatch(t -> normalize(t).contains(normalize(keyword))))
                 .filter(p -> techStacks == null || techStacks.isEmpty() ||
                         techStacks.stream().anyMatch(t -> p.getTechStacks().contains(t)))
-                .filter(p -> !recruitingOnly || p.getStatus() == com.hacakthon.team1.project.domain.entity.ProjectStatus.RECRUITING)
+                .filter(p -> status == null || p.getStatus() == status)
                 .sorted(comparator)
                 .toList();
     }
