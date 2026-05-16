@@ -14,4 +14,6 @@ public interface TeamApplicationRepository extends JpaRepository<TeamApplication
     boolean existsByUserIdAndProjectId(Long userId, Long projectId);
 
     long countByProjectId(Long projectId);
+
+    long countByUserIdAndStatus(Long userId, com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus status);
 }
