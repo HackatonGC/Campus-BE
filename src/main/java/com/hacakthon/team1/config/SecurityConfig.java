@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/api/v1/projects",
                                 "/api/v1/projects/{projectId}",
+                                "/api/v1/projects/share/{shareToken}",
                                 "/api/v1/projects/{projectId}/reviews",
                                 "/api/v1/reviews/{reviewId}",
                                 "/swagger-ui/**",
