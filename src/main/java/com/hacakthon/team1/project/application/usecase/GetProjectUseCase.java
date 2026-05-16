@@ -25,7 +25,7 @@ public class GetProjectUseCase {
     private final TeamApplicationRepository teamApplicationRepository;
 
     @Transactional
-    public ProjectResponse get(Long id) {
+    public ProjectResponse get(Long id, Long userId) {
         Project project = projectQueryService.findById(id);
         project.incrementViewCount();
         projectSaveService.save(project);
@@ -33,8 +33,9 @@ public class GetProjectUseCase {
         long commentCount = commentRepository.countByProjectId(id);
         long totalApplicationCount = teamApplicationRepository.countByProjectId(id);
         Map<Long, Long> acceptedCountMap = buildAcceptedCountMap(project);
+        boolean isApplied = userId != null && teamApplicationRepository.existsByUserIdAndProjectId(userId, id);
 
-        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap);
+        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap, isApplied);
     }
 
     private Map<Long, Long> buildAcceptedCountMap(Project project) {

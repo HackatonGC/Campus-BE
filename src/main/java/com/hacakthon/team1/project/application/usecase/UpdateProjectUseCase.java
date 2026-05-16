@@ -76,6 +76,6 @@ public class UpdateProjectUseCase {
                         r -> r.getId(),
                         r -> teamApplicationRepository.countByRecruitmentIdAndStatus(r.getId(), com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus.ACCEPTED)
                 ));
-        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap);
+        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap, false);
     }
 }

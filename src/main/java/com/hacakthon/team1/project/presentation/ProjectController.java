@@ -68,8 +68,9 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     @Operation(summary = "프로젝트 단건 조회")
-    public ResponseEntity<CommonResponse<ProjectResponse>> get(@PathVariable Long id) {
-        ProjectResponse response = getProjectUseCase.get(id);
+    public ResponseEntity<CommonResponse<ProjectResponse>> get(@PathVariable Long id,
+                                                               @CurrentUser Long userId) {
+        ProjectResponse response = getProjectUseCase.get(id, userId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_FOUND, response));
     }
 
@@ -85,8 +86,9 @@ public class ProjectController {
 
     @GetMapping("/share/{shareToken}")
     @Operation(summary = "공유 링크로 프로젝트 조회")
-    public ResponseEntity<CommonResponse<ProjectResponse>> getByShareToken(@PathVariable String shareToken) {
-        ProjectResponse response = getProjectByShareTokenUseCase.get(shareToken);
+    public ResponseEntity<CommonResponse<ProjectResponse>> getByShareToken(@PathVariable String shareToken,
+                                                                            @CurrentUser Long userId) {
+        ProjectResponse response = getProjectByShareTokenUseCase.get(shareToken, userId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_FOUND, response));
     }
 

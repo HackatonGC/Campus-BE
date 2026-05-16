@@ -36,7 +36,7 @@ public class ProjectMapper {
     }
 
     public static ProjectResponse toResponse(Project project, long commentCount, long totalApplicationCount,
-                                             Map<Long, Long> acceptedCountByRecruitmentId) {
+                                             Map<Long, Long> acceptedCountByRecruitmentId, boolean isApplied) {
         List<RecruitmentResponse> recruitments = project.getRecruitments().stream()
                 .map(r -> new RecruitmentResponse(
                         r.getId(), r.getRole(), r.getCount(),
@@ -83,7 +83,8 @@ public class ProjectMapper {
                 project.getUser().getId(),
                 project.getUser().getName(),
                 project.getUser().getSchool(),
-                project.getCreatedAt()
+                project.getCreatedAt(),
+                isApplied
         );
     }
 }

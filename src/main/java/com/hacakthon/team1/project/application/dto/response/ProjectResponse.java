@@ -46,5 +46,6 @@ public record ProjectResponse(
         Long authorId,
         String authorName,
         String authorSchool,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        boolean isApplied
 ) {}

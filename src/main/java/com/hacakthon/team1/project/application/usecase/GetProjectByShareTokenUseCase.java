@@ -27,7 +27,7 @@ public class GetProjectByShareTokenUseCase {
     private final TeamApplicationRepository teamApplicationRepository;
 
     @Transactional
-    public ProjectResponse get(String shareToken) {
+    public ProjectResponse get(String shareToken, Long userId) {
         Project project = projectRepository.findByShareToken(shareToken)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PROJECT_NOT_FOUND));
 
@@ -41,7 +41,8 @@ public class GetProjectByShareTokenUseCase {
                         r -> r.getId(),
                         r -> teamApplicationRepository.countByRecruitmentIdAndStatus(r.getId(), ApplicationStatus.ACCEPTED)
                 ));
+        boolean isApplied = userId != null && teamApplicationRepository.existsByUserIdAndProjectId(userId, project.getId());
 
-        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap);
+        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap, isApplied);
     }
 }
