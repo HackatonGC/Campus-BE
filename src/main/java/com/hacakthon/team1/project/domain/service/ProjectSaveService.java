@@ -15,6 +15,10 @@ public class ProjectSaveService {
         return projectRepository.save(project);
     }
 
+    public Project saveAndFlush(Project project) {
+        return projectRepository.saveAndFlush(project);
+    }
+
     public void delete(Project project) {
         projectRepository.delete(project);
     }

@@ -78,6 +78,7 @@ public class CreateProjectUseCase {
             ));
         }
 
-        return ProjectMapper.toResponse(savedProject, 0, 0, java.util.Map.of());
+        Project flushedProject = projectSaveService.saveAndFlush(savedProject);
+        return ProjectMapper.toResponse(flushedProject, 0, 0, java.util.Map.of());
     }
 }
