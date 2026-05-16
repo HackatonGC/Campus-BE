@@ -6,6 +6,7 @@ import com.hacakthon.team1.user.application.dto.request.LoginRequest;
 import com.hacakthon.team1.user.application.dto.request.SignUpRequest;
 import com.hacakthon.team1.user.application.dto.response.LoginResponse;
 import com.hacakthon.team1.user.application.dto.response.UserResponse;
+import com.hacakthon.team1.user.application.usecase.DeleteUserUseCase;
 import com.hacakthon.team1.user.application.usecase.LoginUseCase;
 import com.hacakthon.team1.user.application.usecase.LogoutUseCase;
 import com.hacakthon.team1.user.application.usecase.SignUpUseCase;
@@ -26,6 +27,7 @@ public class UserController {
     private final SignUpUseCase signUpUseCase;
     private final LoginUseCase loginUseCase;
     private final LogoutUseCase logoutUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
@@ -48,5 +50,14 @@ public class UserController {
             @RequestHeader("Authorization") String authorization) {
         logoutUseCase.logout(authorization);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_LOGOUT, null));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "회원탈퇴")
+    public ResponseEntity<CommonResponse<Void>> deleteUser(
+            @PathVariable Long id,
+            @RequestParam Long requesterId) {
+        deleteUserUseCase.delete(id, requesterId);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_DELETED, null));
     }
 }
