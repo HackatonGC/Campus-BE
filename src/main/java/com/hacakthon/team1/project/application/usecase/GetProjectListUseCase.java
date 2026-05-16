@@ -2,6 +2,7 @@ package com.hacakthon.team1.project.application.usecase;
 
 import com.hacakthon.team1.project.application.dto.response.ProjectSummaryResponse;
 import com.hacakthon.team1.project.application.mapper.ProjectMapper;
+import com.hacakthon.team1.project.domain.entity.ProjectStatus;
 import com.hacakthon.team1.project.domain.service.ProjectQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,8 @@ public class GetProjectListUseCase {
     private final ProjectQueryService projectQueryService;
 
     @Transactional(readOnly = true)
-    public List<ProjectSummaryResponse> getList(String keyword, List<String> techStacks, boolean recruitingOnly, String sort) {
-        return projectQueryService.search(keyword, techStacks, recruitingOnly, sort).stream()
+    public List<ProjectSummaryResponse> getList(String keyword, List<String> techStacks, ProjectStatus status, String sort) {
+        return projectQueryService.search(keyword, techStacks, status, sort).stream()
                 .map(ProjectMapper::toSummaryResponse)
                 .toList();
     }

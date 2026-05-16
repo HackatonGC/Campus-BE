@@ -6,6 +6,7 @@ import com.hacakthon.team1.project.application.dto.request.CreateProjectRequest;
 import com.hacakthon.team1.project.application.dto.response.ProjectResponse;
 import com.hacakthon.team1.project.application.dto.response.ProjectSummaryResponse;
 import com.hacakthon.team1.project.application.dto.request.UpdateProjectRequest;
+import com.hacakthon.team1.project.domain.entity.ProjectStatus;
 import com.hacakthon.team1.project.application.usecase.CreateProjectUseCase;
 import com.hacakthon.team1.project.application.usecase.DeleteProjectUseCase;
 import com.hacakthon.team1.project.application.usecase.GetProjectByShareTokenUseCase;
@@ -50,9 +51,9 @@ public class ProjectController {
     public ResponseEntity<CommonResponse<List<ProjectSummaryResponse>>> getList(
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) List<String> techStacks,
-            @RequestParam(defaultValue = "false") boolean recruitingOnly,
+            @RequestParam(required = false) ProjectStatus status,
             @RequestParam(defaultValue = "latest") String sort) {
-        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStacks, recruitingOnly, sort);
+        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStacks, status, sort);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_LIST_FOUND, response));
     }
 
