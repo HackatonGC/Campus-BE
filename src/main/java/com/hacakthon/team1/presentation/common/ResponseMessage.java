@@ -1,0 +1,26 @@
+package com.hacakthon.team1.presentation.common;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum ResponseMessage {
+
+    OK(200, "요청이 성공했습니다."),
+    CREATED(201, "생성되었습니다."),
+
+    PROJECT_CREATED(201, "프로젝트가 등록되었습니다."),
+    PROJECT_FOUND(200, "프로젝트 조회에 성공했습니다."),
+    PROJECT_LIST_FOUND(200, "프로젝트 목록 조회에 성공했습니다."),
+    PROJECT_DELETED(200, "프로젝트가 삭제되었습니다."),
+
+    APPLICATION_CREATED(201, "팀원 신청이 완료되었습니다."),
+    APPLICATION_LIST_FOUND(200, "신청 목록 조회에 성공했습니다."),
+
+    REVIEW_REQUEST_CREATED(201, "코드 리뷰 요청이 완료되었습니다."),
+    REVIEW_REQUEST_LIST_FOUND(200, "코드 리뷰 요청 목록 조회에 성공했습니다.");
+
+    private final int status;
+    private final String message;
+}
