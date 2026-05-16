@@ -28,7 +28,7 @@ public class LoginUseCase {
             throw new BusinessException(ErrorCode.UNAUTHORIZED);
         }
 
-        String token = jwtProvider.generateToken(user.getEmail());
+        String token = jwtProvider.generateToken(user.getId(), user.getEmail());
         return new LoginResponse(token, user.getId(), user.getName());
     }
 }

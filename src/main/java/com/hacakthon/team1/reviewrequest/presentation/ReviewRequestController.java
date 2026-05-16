@@ -2,6 +2,7 @@ package com.hacakthon.team1.reviewrequest.presentation;
 
 import com.hacakthon.team1.common.response.CommonResponse;
 import com.hacakthon.team1.common.response.ResponseMessage;
+import com.hacakthon.team1.config.CurrentUser;
 import com.hacakthon.team1.reviewrequest.application.dto.request.ReviewRequestRequest;
 import com.hacakthon.team1.reviewrequest.application.dto.response.ReviewRequestDetailResponse;
 import com.hacakthon.team1.reviewrequest.application.dto.response.ReviewRequestSummaryResponse;
@@ -37,7 +38,7 @@ public class ReviewRequestController {
     })
     public ResponseEntity<CommonResponse<Void>> createReviewRequest(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody ReviewRequestRequest request
     ) {
         createReviewRequestUseCase.createReviewRequest(userId, projectId, request);
@@ -48,8 +49,7 @@ public class ReviewRequestController {
     @GetMapping("/api/v1/projects/{projectId}/reviews")
     @Operation(summary = "프로젝트별 리뷰 요청 목록 조회", description = "특정 프로젝트에 등록된 코드 리뷰 요청 목록을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "프로젝트 없음")
+            @ApiResponse(responseCode = "200", description = "조회 성공")
     })
     public ResponseEntity<CommonResponse<List<ReviewRequestSummaryResponse>>> getByProject(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId
@@ -59,7 +59,7 @@ public class ReviewRequestController {
     }
 
     @GetMapping("/api/v1/reviews/{reviewId}")
-    @Operation(summary = "리뷰 요청 상세 조회", description = "코드 리뷰 요청의 상세 내용을 조회합니다. 제목, 내용, GitHub URL이 포함됩니다.")
+    @Operation(summary = "리뷰 요청 상세 조회", description = "코드 리뷰 요청의 상세 내용을 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "404", description = "리뷰 요청 없음")
@@ -74,11 +74,10 @@ public class ReviewRequestController {
     @GetMapping("/api/v1/reviews/my")
     @Operation(summary = "내 리뷰 요청 목록 조회", description = "내가 등록한 코드 리뷰 요청 목록을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "유저 없음")
+            @ApiResponse(responseCode = "200", description = "조회 성공")
     })
     public ResponseEntity<CommonResponse<List<ReviewRequestSummaryResponse>>> getMyReviewRequests(
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         List<ReviewRequestSummaryResponse> responses = getReviewRequestUseCase.getMyReviewRequests(userId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.REVIEW_REQUEST_LIST_FOUND, responses));
