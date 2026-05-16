@@ -59,7 +59,20 @@ public enum ResponseMessage {
 
     ACTIVITY_LIST_FOUND(200, "최근 활동 조회에 성공했습니다."),
 
-    USER_STATS_FOUND(200, "마이페이지 통계 조회에 성공했습니다.");
+    USER_STATS_FOUND(200, "마이페이지 통계 조회에 성공했습니다."),
+
+    QNA_CREATED(201, "질문이 등록되었습니다."),
+    QNA_FOUND(200, "질문 조회에 성공했습니다."),
+    QNA_LIST_FOUND(200, "질문 목록 조회에 성공했습니다."),
+    QNA_DELETED(200, "질문이 삭제되었습니다."),
+    QNA_LIKED(200, "질문 좋아요가 추가되었습니다."),
+    QNA_UNLIKED(200, "질문 좋아요가 취소되었습니다."),
+    QNA_ANSWER_CREATED(201, "답변이 등록되었습니다."),
+    QNA_ANSWER_LIST_FOUND(200, "답변 목록 조회에 성공했습니다."),
+    QNA_ANSWER_DELETED(200, "답변이 삭제되었습니다."),
+    QNA_ANSWER_LIKED(200, "답변 좋아요가 추가되었습니다."),
+    QNA_ANSWER_UNLIKED(200, "답변 좋아요가 취소되었습니다."),
+    QNA_ANSWER_ACCEPTED(200, "답변이 채택되었습니다.");
 
     private final int status;
     private final String message;
