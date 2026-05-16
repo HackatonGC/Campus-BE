@@ -24,6 +24,7 @@ public enum ErrorCode {
     PROJECT_NOT_RECRUITING(HttpStatus.BAD_REQUEST, "모집 중인 프로젝트가 아닙니다."),
     REVIEW_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 요청입니다."),
     REVIEW_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 답변입니다."),
+    INVALID_VERIFICATION_CODE(HttpStatus.BAD_REQUEST, "인증 코드가 올바르지 않거나 만료되었습니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류가 발생했습니다.");
