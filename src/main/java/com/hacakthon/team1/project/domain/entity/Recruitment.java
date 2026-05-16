@@ -26,13 +26,16 @@ public class Recruitment {
     @Column(nullable = false)
     private int count;
 
+    private String requiredSkills;
+
     private String description;
 
     @Builder
-    public Recruitment(Project project, String role, int count, String description) {
+    public Recruitment(Project project, String role, int count, String requiredSkills, String description) {
         this.project = project;
         this.role = role;
         this.count = count;
+        this.requiredSkills = requiredSkills;
         this.description = description;
     }
 }

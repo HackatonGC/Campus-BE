@@ -35,7 +35,12 @@ public class UpdateProjectUseCase {
                 request.title(), request.summary(), request.description(),
                 request.techStacks(), request.status(), request.projectType(),
                 request.thumbnailUrl(), request.githubUrl(), request.deployUrl(),
-                request.figmaUrl(), request.notionUrl()
+                request.figmaUrl(), request.notionUrl(),
+                request.expectedDuration(), request.progressMethod(),
+                request.recruitmentDeadline(), request.recruitmentMessage(),
+                request.projectDuration(), request.myRole(), request.mainFeatures(),
+                request.demoImages(), request.hardships(), request.learnings(),
+                request.messageToJuniors()
         );
 
         if (request.recruitments() != null) {
@@ -45,6 +50,7 @@ public class UpdateProjectUseCase {
                             .project(project)
                             .role(r.role())
                             .count(r.count())
+                            .requiredSkills(r.requiredSkills())
                             .description(r.description())
                             .build()
             ));

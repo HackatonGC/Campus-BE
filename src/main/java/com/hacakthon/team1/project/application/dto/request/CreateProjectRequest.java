@@ -3,6 +3,7 @@ package com.hacakthon.team1.project.application.dto.request;
 import com.hacakthon.team1.project.domain.entity.ProjectStatus;
 import com.hacakthon.team1.project.domain.entity.ProjectType;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record CreateProjectRequest(
@@ -17,5 +18,18 @@ public record CreateProjectRequest(
         String deployUrl,
         String figmaUrl,
         String notionUrl,
-        List<RecruitmentRequest> recruitments
+        // 모집 관련
+        String expectedDuration,
+        String progressMethod,
+        LocalDate recruitmentDeadline,
+        String recruitmentMessage,
+        List<RecruitmentRequest> recruitments,
+        // 완료 관련
+        String projectDuration,
+        String myRole,
+        String mainFeatures,
+        List<String> demoImages,
+        String hardships,
+        String learnings,
+        String messageToJuniors
 ) {}

@@ -29,7 +29,7 @@ public class ProjectMapper {
 
     public static ProjectResponse toResponse(Project project, long commentCount, long totalApplicationCount) {
         List<RecruitmentResponse> recruitments = project.getRecruitments().stream()
-                .map(r -> new RecruitmentResponse(r.getId(), r.getRole(), r.getCount(), r.getDescription()))
+                .map(r -> new RecruitmentResponse(r.getId(), r.getRole(), r.getCount(), r.getRequiredSkills(), r.getDescription()))
                 .toList();
 
         return new ProjectResponse(
@@ -46,6 +46,17 @@ public class ProjectMapper {
                 project.getDeployUrl(),
                 project.getFigmaUrl(),
                 project.getNotionUrl(),
+                project.getExpectedDuration(),
+                project.getProgressMethod(),
+                project.getRecruitmentDeadline(),
+                project.getRecruitmentMessage(),
+                project.getProjectDuration(),
+                project.getMyRole(),
+                project.getMainFeatures(),
+                project.getDemoImages(),
+                project.getHardships(),
+                project.getLearnings(),
+                project.getMessageToJuniors(),
                 project.getViewCount(),
                 project.getLikeCount(),
                 commentCount,

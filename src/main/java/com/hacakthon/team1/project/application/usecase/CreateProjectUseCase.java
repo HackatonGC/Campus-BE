@@ -39,6 +39,17 @@ public class CreateProjectUseCase {
                 .deployUrl(request.deployUrl())
                 .figmaUrl(request.figmaUrl())
                 .notionUrl(request.notionUrl())
+                .expectedDuration(request.expectedDuration())
+                .progressMethod(request.progressMethod())
+                .recruitmentDeadline(request.recruitmentDeadline())
+                .recruitmentMessage(request.recruitmentMessage())
+                .projectDuration(request.projectDuration())
+                .myRole(request.myRole())
+                .mainFeatures(request.mainFeatures())
+                .demoImages(request.demoImages())
+                .hardships(request.hardships())
+                .learnings(request.learnings())
+                .messageToJuniors(request.messageToJuniors())
                 .build();
 
         Project savedProject = projectSaveService.save(project);
@@ -49,6 +60,7 @@ public class CreateProjectUseCase {
                         .project(savedProject)
                         .role(r.role())
                         .count(r.count())
+                        .requiredSkills(r.requiredSkills())
                         .description(r.description())
                         .build();
                 savedProject.addRecruitment(recruitment);
