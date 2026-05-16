@@ -13,6 +13,13 @@ public class UserMapper {
                 user.getSchool(),
                 user.getDepartment(),
                 user.getTechStacks(),
+                user.getBio(),
+                user.getGithubUrl(),
+                user.getBlogUrl(),
+                user.getPortfolioUrl(),
+                user.isProjectPublic(),
+                user.isProfilePublic(),
+                user.isActivityPublic(),
                 user.getCreatedAt()
         );
     }
