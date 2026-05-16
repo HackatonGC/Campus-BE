@@ -16,10 +16,14 @@ public class ApplyTeamUseCase {
 
     private final TeamApplicationSaveService teamApplicationSaveService;
     private final UserQueryService userQueryService;
+    private final ProjectValidator projectValidator;
 
     @Transactional
-    public void apply(Long userId, TeamApplicationRequest request) {
-        if (teamApplicationSaveService.existsByUserIdAndProjectId(userId, request.projectId())) {
+    public void apply(Long userId, Long projectId, TeamApplicationRequest request) {
+        projectValidator.validateProjectExists(projectId);
+        projectValidator.validateProjectRecruiting(projectId);
+
+        if (teamApplicationSaveService.existsByUserIdAndProjectId(userId, projectId)) {
             throw new DuplicateApplicationException();
         }
 
@@ -27,7 +31,7 @@ public class ApplyTeamUseCase {
 
         TeamApplication teamApplication = TeamApplication.builder()
                 .user(user)
-                .projectId(request.projectId())
+                .projectId(projectId)
                 .message(request.message())
                 .build();
 
