@@ -41,10 +41,10 @@ public class ProjectController {
     @Operation(summary = "프로젝트 목록 조회 (검색/필터/정렬)")
     public ResponseEntity<CommonResponse<List<ProjectSummaryResponse>>> getList(
             @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String techStack,
+            @RequestParam(required = false) List<String> techStacks,
             @RequestParam(defaultValue = "false") boolean recruitingOnly,
             @RequestParam(defaultValue = "latest") String sort) {
-        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStack, recruitingOnly, sort);
+        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStacks, recruitingOnly, sort);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_LIST_FOUND, response));
     }
 
