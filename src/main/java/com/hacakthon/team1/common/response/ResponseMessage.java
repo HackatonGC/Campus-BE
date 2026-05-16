@@ -21,6 +21,8 @@ public enum ResponseMessage {
     PROJECT_DELETED(200, "프로젝트가 삭제되었습니다."),
 
     APPLICATION_CREATED(201, "팀원 신청이 완료되었습니다."),
+    APPLICATION_STATUS_UPDATED(200, "신청 상태가 변경되었습니다."),
+    APPLICATION_CANCELED(200, "신청이 취소되었습니다."),
     APPLICATION_LIST_FOUND(200, "신청 목록 조회에 성공했습니다."),
 
     REVIEW_REQUEST_CREATED(201, "코드 리뷰 요청이 완료되었습니다."),
