@@ -3,6 +3,8 @@ package com.hacakthon.team1.teamapplication.application.usecase;
 import com.hacakthon.team1.project.domain.entity.Project;
 import com.hacakthon.team1.project.domain.entity.Recruitment;
 import com.hacakthon.team1.teamapplication.application.dto.request.TeamApplicationRequest;
+import com.hacakthon.team1.application.exception.BusinessException;
+import com.hacakthon.team1.application.exception.ErrorCode;
 import com.hacakthon.team1.teamapplication.application.exception.DuplicateApplicationException;
 import com.hacakthon.team1.teamapplication.application.exception.InvalidRecruitmentException;
 import com.hacakthon.team1.teamapplication.domain.entity.TeamApplication;
@@ -25,6 +27,10 @@ public class ApplyTeamUseCase {
     public void apply(Long userId, Long projectId, TeamApplicationRequest request) {
         Project project = projectValidator.validateProjectExists(projectId);
         projectValidator.validateProjectRecruiting(project);
+
+        if (project.getUser().getId().equals(userId)) {
+            throw new BusinessException(ErrorCode.CANNOT_APPLY_OWN_PROJECT);
+        }
 
         if (teamApplicationSaveService.existsByUserIdAndProjectId(userId, projectId)) {
             throw new DuplicateApplicationException();
