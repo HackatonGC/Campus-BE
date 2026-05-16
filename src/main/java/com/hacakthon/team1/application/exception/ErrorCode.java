@@ -22,6 +22,7 @@ public enum ErrorCode {
     DUPLICATE_LIKE(HttpStatus.CONFLICT, "이미 좋아요한 프로젝트입니다."),
     LIKE_NOT_FOUND(HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다."),
     PROJECT_NOT_RECRUITING(HttpStatus.BAD_REQUEST, "모집 중인 프로젝트가 아닙니다."),
+    CANNOT_APPLY_OWN_PROJECT(HttpStatus.FORBIDDEN, "본인이 등록한 프로젝트에는 지원할 수 없습니다."),
     INVALID_RECRUITMENT(HttpStatus.BAD_REQUEST, "해당 프로젝트에 존재하지 않는 모집 포지션입니다."),
     REVIEW_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 요청입니다."),
     REVIEW_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 답변입니다."),
