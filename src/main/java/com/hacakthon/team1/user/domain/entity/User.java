@@ -80,6 +80,20 @@ public class User extends BaseEntity {
         this.portfolioUrl = portfolioUrl;
     }
 
+    public void updateInfo(String name, String school, String department) {
+        this.name = name;
+        this.school = school;
+        this.department = department;
+    }
+
+    public void updatePortfolio(String bio, String githubUrl, String blogUrl, String portfolioUrl, List<String> techStacks) {
+        this.bio = bio;
+        this.githubUrl = githubUrl;
+        this.blogUrl = blogUrl;
+        this.portfolioUrl = portfolioUrl;
+        this.techStacks = techStacks != null ? techStacks : new ArrayList<>();
+    }
+
     public void updatePassword(String encodedPassword) {
         this.password = encodedPassword;
     }
