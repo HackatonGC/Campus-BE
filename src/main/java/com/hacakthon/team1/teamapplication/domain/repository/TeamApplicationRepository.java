@@ -12,4 +12,6 @@ public interface TeamApplicationRepository extends JpaRepository<TeamApplication
     List<TeamApplication> findAllByUserId(Long userId);
 
     boolean existsByUserIdAndProjectId(Long userId, Long projectId);
+
+    long countByProjectId(Long projectId);
 }
