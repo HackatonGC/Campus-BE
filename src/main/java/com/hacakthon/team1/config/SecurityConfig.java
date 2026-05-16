@@ -26,7 +26,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users/signup", "/api/v1/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/users/signup",
+                                "/api/v1/users/login",
+                                "/api/v1/auth/email/send",
+                                "/api/v1/auth/email/verify"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api/v1/projects",
                                 "/api/v1/projects/{projectId}",
