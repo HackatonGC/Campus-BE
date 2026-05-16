@@ -11,6 +11,7 @@ import com.hacakthon.team1.user.application.dto.request.UpdateUserRequest;
 import com.hacakthon.team1.user.application.dto.response.ActivityResponse;
 import com.hacakthon.team1.user.application.dto.response.LoginResponse;
 import com.hacakthon.team1.user.application.dto.response.UserResponse;
+import com.hacakthon.team1.user.application.dto.response.UserStatsResponse;
 import com.hacakthon.team1.user.application.usecase.ChangePasswordUseCase;
 import com.hacakthon.team1.user.application.usecase.DeleteUserUseCase;
 import com.hacakthon.team1.user.application.usecase.GetUserUseCase;
@@ -18,6 +19,7 @@ import com.hacakthon.team1.user.application.usecase.LoginUseCase;
 import com.hacakthon.team1.user.application.usecase.LogoutUseCase;
 import com.hacakthon.team1.user.application.usecase.SignUpUseCase;
 import com.hacakthon.team1.user.application.usecase.GetActivityUseCase;
+import com.hacakthon.team1.user.application.usecase.GetUserStatsUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdatePrivacyUseCase;
 import com.hacakthon.team1.user.application.usecase.UpdateUserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,6 +46,7 @@ public class UserController {
     private final ChangePasswordUseCase changePasswordUseCase;
     private final UpdatePrivacyUseCase updatePrivacyUseCase;
     private final GetActivityUseCase getActivityUseCase;
+    private final GetUserStatsUseCase getUserStatsUseCase;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입")
@@ -101,6 +104,14 @@ public class UserController {
             @RequestBody UpdatePrivacyRequest request) {
         UserResponse response = updatePrivacyUseCase.updatePrivacy(id, request);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_PRIVACY_UPDATED, response));
+    }
+
+    @GetMapping("/me/stats")
+    @Operation(summary = "마이페이지 통계 조회")
+    public ResponseEntity<CommonResponse<UserStatsResponse>> getStats(
+            @CurrentUser Long userId) {
+        UserStatsResponse response = getUserStatsUseCase.getStats(userId);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_STATS_FOUND, response));
     }
 
     @GetMapping("/me/activities")

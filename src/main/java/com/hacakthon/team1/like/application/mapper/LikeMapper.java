@@ -18,7 +18,9 @@ public class LikeMapper {
                 project.getProjectType(),
                 project.getThumbnailUrl(),
                 project.getViewCount(),
-                project.getLikeCount()
+                project.getLikeCount(),
+                project.getUser().getName(),
+                project.getCreatedAt()
         );
     }
 }

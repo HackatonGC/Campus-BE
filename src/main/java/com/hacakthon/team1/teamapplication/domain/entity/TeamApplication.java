@@ -26,6 +26,9 @@ public class TeamApplication extends BaseEntity {
     private Long projectId;
 
     @Column
+    private String role;
+
+    @Column
     private String message;
 
     @Enumerated(EnumType.STRING)
@@ -33,9 +36,10 @@ public class TeamApplication extends BaseEntity {
     private ApplicationStatus status;
 
     @Builder
-    public TeamApplication(User user, Long projectId, String message) {
+    public TeamApplication(User user, Long projectId, String role, String message) {
         this.user = user;
         this.projectId = projectId;
+        this.role = role;
         this.message = message;
         this.status = ApplicationStatus.PENDING;
     }

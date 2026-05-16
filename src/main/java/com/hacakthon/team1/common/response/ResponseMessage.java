@@ -55,7 +55,9 @@ public enum ResponseMessage {
     COMMENT_LIKED(201, "댓글 좋아요가 추가되었습니다."),
     COMMENT_UNLIKED(200, "댓글 좋아요가 취소되었습니다."),
 
-    ACTIVITY_LIST_FOUND(200, "최근 활동 조회에 성공했습니다.");
+    ACTIVITY_LIST_FOUND(200, "최근 활동 조회에 성공했습니다."),
+
+    USER_STATS_FOUND(200, "마이페이지 통계 조회에 성공했습니다.");
 
     private final int status;
     private final String message;

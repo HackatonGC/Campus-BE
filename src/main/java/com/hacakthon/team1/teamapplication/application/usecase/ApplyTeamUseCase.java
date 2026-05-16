@@ -32,6 +32,7 @@ public class ApplyTeamUseCase {
         TeamApplication teamApplication = TeamApplication.builder()
                 .user(user)
                 .projectId(projectId)
+                .role(request.role())
                 .message(request.message())
                 .build();
 
