@@ -20,6 +20,7 @@ public class ProjectMapper {
                 project.getThumbnailUrl(),
                 project.getViewCount(),
                 project.getLikeCount(),
+                project.getUser().getId(),
                 project.getUser().getName(),
                 project.getUser().getSchool()
         );
