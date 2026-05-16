@@ -18,4 +18,8 @@ public class UserSaveService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
 }
