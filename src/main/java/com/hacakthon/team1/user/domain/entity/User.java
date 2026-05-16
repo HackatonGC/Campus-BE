@@ -47,13 +47,13 @@ public class User extends BaseEntity {
     private String blogUrl;
     private String portfolioUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isProjectPublic = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isProfilePublic = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isActivityPublic = false;
 
     @Builder
