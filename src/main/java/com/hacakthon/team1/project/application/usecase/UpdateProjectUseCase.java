@@ -8,6 +8,7 @@ import com.hacakthon.team1.project.application.dto.response.ProjectResponse;
 import com.hacakthon.team1.project.application.mapper.ProjectMapper;
 import com.hacakthon.team1.project.domain.entity.Project;
 import com.hacakthon.team1.project.domain.entity.Recruitment;
+import com.hacakthon.team1.project.domain.entity.TeamMember;
 import com.hacakthon.team1.project.domain.service.ProjectQueryService;
 import com.hacakthon.team1.project.domain.service.ProjectSaveService;
 import com.hacakthon.team1.teamapplication.domain.repository.TeamApplicationRepository;
@@ -36,11 +37,10 @@ public class UpdateProjectUseCase {
                 request.techStacks(), request.status(), request.projectType(),
                 request.thumbnailUrl(), request.githubUrl(), request.deployUrl(),
                 request.figmaUrl(), request.notionUrl(),
-                request.expectedDuration(), request.progressMethod(),
-                request.recruitmentDeadline(), request.recruitmentMessage(),
-                request.projectDuration(), request.myRole(), request.mainFeatures(),
-                request.demoImages(), request.hardships(), request.learnings(),
-                request.messageToJuniors()
+                request.duration(), request.meetingType(), request.deadline(),
+                request.recruitMessage(),
+                request.startDate(), request.endDate(), request.myRole(), request.features(),
+                request.demoImages(), request.hardPart(), request.learned(), request.messageToJunior()
         );
 
         if (request.recruitments() != null) {
@@ -50,8 +50,19 @@ public class UpdateProjectUseCase {
                             .project(project)
                             .role(r.role())
                             .count(r.count())
-                            .requiredSkills(r.requiredSkills())
+                            .skills(r.skills())
                             .description(r.description())
+                            .build()
+            ));
+        }
+
+        if (request.teamMembers() != null) {
+            project.clearTeamMembers();
+            request.teamMembers().forEach(m -> project.addTeamMember(
+                    TeamMember.builder()
+                            .project(project)
+                            .role(m.role())
+                            .count(m.count())
                             .build()
             ));
         }

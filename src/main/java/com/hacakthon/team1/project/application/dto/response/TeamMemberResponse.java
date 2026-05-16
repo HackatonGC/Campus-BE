@@ -1,9 +1,7 @@
 package com.hacakthon.team1.project.application.dto.response;
 
-public record RecruitmentResponse(
+public record TeamMemberResponse(
         Long id,
         String role,
-        int count,
-        String skills,
-        String description
+        int count
 ) {}

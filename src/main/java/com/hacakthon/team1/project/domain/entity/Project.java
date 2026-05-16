@@ -56,19 +56,23 @@ public class Project extends BaseEntity {
     private String notionUrl;
 
     // 모집 관련 필드
-    private String expectedDuration;
-    private String progressMethod;
-    private LocalDate recruitmentDeadline;
+    private String duration;
+
+    @Enumerated(EnumType.STRING)
+    private MeetingType meetingType;
+
+    private LocalDate deadline;
 
     @Column(columnDefinition = "TEXT")
-    private String recruitmentMessage;
+    private String recruitMessage;
 
     // 완료 관련 필드
-    private String projectDuration;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String myRole;
 
     @Column(columnDefinition = "TEXT")
-    private String mainFeatures;
+    private String features;
 
     @ElementCollection
     @CollectionTable(name = "project_demo_images", joinColumns = @JoinColumn(name = "project_id"))
@@ -76,13 +80,13 @@ public class Project extends BaseEntity {
     private List<String> demoImages = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
-    private String hardships;
+    private String hardPart;
 
     @Column(columnDefinition = "TEXT")
-    private String learnings;
+    private String learned;
 
     @Column(columnDefinition = "TEXT")
-    private String messageToJuniors;
+    private String messageToJunior;
 
     @Column(nullable = false, unique = true, updatable = false)
     private String shareToken;
@@ -96,15 +100,18 @@ public class Project extends BaseEntity {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recruitment> recruitments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TeamMember> teamMembers = new ArrayList<>();
+
     @Builder
     public Project(User user, String title, String summary, String description,
                    List<String> techStacks, ProjectStatus status, ProjectType projectType,
                    String thumbnailUrl, String githubUrl, String deployUrl,
                    String figmaUrl, String notionUrl,
-                   String expectedDuration, String progressMethod, LocalDate recruitmentDeadline,
-                   String recruitmentMessage,
-                   String projectDuration, String myRole, String mainFeatures,
-                   List<String> demoImages, String hardships, String learnings, String messageToJuniors) {
+                   String duration, MeetingType meetingType, LocalDate deadline,
+                   String recruitMessage,
+                   LocalDate startDate, LocalDate endDate, String myRole, String features,
+                   List<String> demoImages, String hardPart, String learned, String messageToJunior) {
         this.user = user;
         this.title = title;
         this.summary = summary;
@@ -117,17 +124,18 @@ public class Project extends BaseEntity {
         this.deployUrl = deployUrl;
         this.figmaUrl = figmaUrl;
         this.notionUrl = notionUrl;
-        this.expectedDuration = expectedDuration;
-        this.progressMethod = progressMethod;
-        this.recruitmentDeadline = recruitmentDeadline;
-        this.recruitmentMessage = recruitmentMessage;
-        this.projectDuration = projectDuration;
+        this.duration = duration;
+        this.meetingType = meetingType;
+        this.deadline = deadline;
+        this.recruitMessage = recruitMessage;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.myRole = myRole;
-        this.mainFeatures = mainFeatures;
+        this.features = features;
         if (demoImages != null) this.demoImages = demoImages;
-        this.hardships = hardships;
-        this.learnings = learnings;
-        this.messageToJuniors = messageToJuniors;
+        this.hardPart = hardPart;
+        this.learned = learned;
+        this.messageToJunior = messageToJunior;
         this.shareToken = UUID.randomUUID().toString();
     }
 
@@ -146,10 +154,10 @@ public class Project extends BaseEntity {
     public void update(String title, String summary, String description, List<String> techStacks,
                        ProjectStatus status, ProjectType projectType, String thumbnailUrl,
                        String githubUrl, String deployUrl, String figmaUrl, String notionUrl,
-                       String expectedDuration, String progressMethod, LocalDate recruitmentDeadline,
-                       String recruitmentMessage,
-                       String projectDuration, String myRole, String mainFeatures,
-                       List<String> demoImages, String hardships, String learnings, String messageToJuniors) {
+                       String duration, MeetingType meetingType, LocalDate deadline,
+                       String recruitMessage,
+                       LocalDate startDate, LocalDate endDate, String myRole, String features,
+                       List<String> demoImages, String hardPart, String learned, String messageToJunior) {
         this.title = title;
         this.summary = summary;
         this.description = description;
@@ -161,17 +169,22 @@ public class Project extends BaseEntity {
         this.deployUrl = deployUrl;
         this.figmaUrl = figmaUrl;
         this.notionUrl = notionUrl;
-        this.expectedDuration = expectedDuration;
-        this.progressMethod = progressMethod;
-        this.recruitmentDeadline = recruitmentDeadline;
-        this.recruitmentMessage = recruitmentMessage;
-        this.projectDuration = projectDuration;
+        this.duration = duration;
+        this.meetingType = meetingType;
+        this.deadline = deadline;
+        this.recruitMessage = recruitMessage;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.myRole = myRole;
-        this.mainFeatures = mainFeatures;
+        this.features = features;
         this.demoImages = demoImages != null ? demoImages : new ArrayList<>();
-        this.hardships = hardships;
-        this.learnings = learnings;
-        this.messageToJuniors = messageToJuniors;
+        this.hardPart = hardPart;
+        this.learned = learned;
+        this.messageToJunior = messageToJunior;
+    }
+
+    public void updateStatus(ProjectStatus status) {
+        this.status = status;
     }
 
     public void clearRecruitments() {
@@ -180,5 +193,13 @@ public class Project extends BaseEntity {
 
     public void addRecruitment(Recruitment recruitment) {
         this.recruitments.add(recruitment);
+    }
+
+    public void clearTeamMembers() {
+        this.teamMembers.clear();
+    }
+
+    public void addTeamMember(TeamMember teamMember) {
+        this.teamMembers.add(teamMember);
     }
 }
