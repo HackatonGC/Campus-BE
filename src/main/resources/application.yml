@@ -23,3 +23,7 @@ springdoc:
 
 server:
   port: 8080
+
+jwt:
+  secret: stackmate-hackathon-secret-key-must-be-at-least-32-bytes
+  expiration: 86400000
