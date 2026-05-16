@@ -2,6 +2,7 @@ package com.hacakthon.team1.like.presentation;
 
 import com.hacakthon.team1.common.response.CommonResponse;
 import com.hacakthon.team1.common.response.ResponseMessage;
+import com.hacakthon.team1.config.CurrentUser;
 import com.hacakthon.team1.like.application.dto.response.LikeResponse;
 import com.hacakthon.team1.like.application.usecase.AddLikeUseCase;
 import com.hacakthon.team1.like.application.usecase.GetLikeListUseCase;
@@ -36,7 +37,7 @@ public class LikeController {
     })
     public ResponseEntity<CommonResponse<Void>> addLike(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         addLikeUseCase.addLike(userId, projectId);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -51,7 +52,7 @@ public class LikeController {
     })
     public ResponseEntity<CommonResponse<Void>> removeLike(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         removeLikeUseCase.removeLike(userId, projectId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.LIKE_REMOVED));
@@ -60,11 +61,10 @@ public class LikeController {
     @GetMapping("/api/v1/users/me/likes")
     @Operation(summary = "내 좋아요 목록 조회", description = "내가 좋아요한 프로젝트 목록을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "유저 없음")
+            @ApiResponse(responseCode = "200", description = "조회 성공")
     })
     public ResponseEntity<CommonResponse<List<LikeResponse>>> getLikes(
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         List<LikeResponse> responses = getLikeListUseCase.getLikes(userId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.LIKE_LIST_FOUND, responses));

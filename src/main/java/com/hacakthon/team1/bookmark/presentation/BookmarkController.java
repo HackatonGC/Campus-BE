@@ -6,6 +6,7 @@ import com.hacakthon.team1.bookmark.application.usecase.GetBookmarkListUseCase;
 import com.hacakthon.team1.bookmark.application.usecase.RemoveBookmarkUseCase;
 import com.hacakthon.team1.common.response.CommonResponse;
 import com.hacakthon.team1.common.response.ResponseMessage;
+import com.hacakthon.team1.config.CurrentUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,7 +37,7 @@ public class BookmarkController {
     })
     public ResponseEntity<CommonResponse<Void>> addBookmark(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         addBookmarkUseCase.addBookmark(userId, projectId);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -51,7 +52,7 @@ public class BookmarkController {
     })
     public ResponseEntity<CommonResponse<Void>> removeBookmark(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         removeBookmarkUseCase.removeBookmark(userId, projectId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.BOOKMARK_REMOVED));
@@ -60,11 +61,10 @@ public class BookmarkController {
     @GetMapping("/api/v1/users/me/bookmarks")
     @Operation(summary = "내 북마크 목록 조회", description = "내가 북마크한 프로젝트 목록을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "유저 없음")
+            @ApiResponse(responseCode = "200", description = "조회 성공")
     })
     public ResponseEntity<CommonResponse<List<BookmarkResponse>>> getBookmarks(
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         List<BookmarkResponse> responses = getBookmarkListUseCase.getBookmarks(userId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.BOOKMARK_LIST_FOUND, responses));

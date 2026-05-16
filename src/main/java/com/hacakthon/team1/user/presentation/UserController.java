@@ -2,13 +2,14 @@ package com.hacakthon.team1.user.presentation;
 
 import com.hacakthon.team1.common.response.CommonResponse;
 import com.hacakthon.team1.common.response.ResponseMessage;
+import com.hacakthon.team1.config.CurrentUser;
+import com.hacakthon.team1.user.application.dto.request.ChangePasswordRequest;
 import com.hacakthon.team1.user.application.dto.request.LoginRequest;
 import com.hacakthon.team1.user.application.dto.request.SignUpRequest;
-import com.hacakthon.team1.user.application.dto.response.LoginResponse;
-import com.hacakthon.team1.user.application.dto.response.UserResponse;
-import com.hacakthon.team1.user.application.dto.request.ChangePasswordRequest;
 import com.hacakthon.team1.user.application.dto.request.UpdatePrivacyRequest;
 import com.hacakthon.team1.user.application.dto.request.UpdateUserRequest;
+import com.hacakthon.team1.user.application.dto.response.LoginResponse;
+import com.hacakthon.team1.user.application.dto.response.UserResponse;
 import com.hacakthon.team1.user.application.usecase.ChangePasswordUseCase;
 import com.hacakthon.team1.user.application.usecase.DeleteUserUseCase;
 import com.hacakthon.team1.user.application.usecase.GetUserUseCase;
@@ -23,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -74,9 +74,9 @@ public class UserController {
     @Operation(summary = "프로필 수정")
     public ResponseEntity<CommonResponse<UserResponse>> updateUser(
             @PathVariable Long id,
-            @RequestParam Long requesterId,
+            @CurrentUser Long currentUserId,
             @RequestBody UpdateUserRequest request) {
-        UserResponse response = updateUserUseCase.update(id, requesterId, request);
+        UserResponse response = updateUserUseCase.update(id, currentUserId, request);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_UPDATED, response));
     }
 
@@ -102,8 +102,8 @@ public class UserController {
     @Operation(summary = "회원탈퇴")
     public ResponseEntity<CommonResponse<Void>> deleteUser(
             @PathVariable Long id,
-            @RequestParam Long requesterId) {
-        deleteUserUseCase.delete(id, requesterId);
+            @CurrentUser Long currentUserId) {
+        deleteUserUseCase.delete(id, currentUserId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.USER_DELETED, null));
     }
 }

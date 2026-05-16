@@ -2,6 +2,7 @@ package com.hacakthon.team1.teamapplication.presentation;
 
 import com.hacakthon.team1.common.response.CommonResponse;
 import com.hacakthon.team1.common.response.ResponseMessage;
+import com.hacakthon.team1.config.CurrentUser;
 import com.hacakthon.team1.teamapplication.application.dto.request.TeamApplicationRequest;
 import com.hacakthon.team1.teamapplication.application.dto.request.UpdateApplicationStatusRequest;
 import com.hacakthon.team1.teamapplication.application.dto.response.TeamApplicationResponse;
@@ -33,7 +34,7 @@ public class TeamApplicationController {
     private final CancelApplicationUseCase cancelApplicationUseCase;
 
     @PostMapping("/api/v1/projects/{projectId}/applications")
-    @Operation(summary = "팀원 신청", description = "프로젝트에 팀원으로 참여 신청합니다. 중복 신청 및 모집 종료 프로젝트에는 신청할 수 없습니다.")
+    @Operation(summary = "팀원 신청", description = "프로젝트에 팀원으로 참여 신청합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "신청 완료"),
             @ApiResponse(responseCode = "400", description = "잘못된 입력 또는 모집 중이 아닌 프로젝트"),
@@ -42,7 +43,7 @@ public class TeamApplicationController {
     })
     public ResponseEntity<CommonResponse<Void>> apply(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody TeamApplicationRequest request
     ) {
         applyTeamUseCase.apply(userId, projectId, request);
@@ -51,7 +52,7 @@ public class TeamApplicationController {
     }
 
     @PatchMapping("/api/v1/projects/{projectId}/applications/{applicationId}/status")
-    @Operation(summary = "신청 상태 변경", description = "팀원 신청을 수락(ACCEPTED) 또는 거절(REJECTED) 합니다. PENDING 상태인 신청만 변경 가능합니다.")
+    @Operation(summary = "신청 상태 변경", description = "팀원 신청을 수락(ACCEPTED) 또는 거절(REJECTED) 합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "상태 변경 완료"),
             @ApiResponse(responseCode = "400", description = "유효하지 않은 상태값"),
@@ -77,17 +78,16 @@ public class TeamApplicationController {
     public ResponseEntity<CommonResponse<Void>> cancel(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId,
             @Parameter(description = "신청 ID") @PathVariable Long applicationId,
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         cancelApplicationUseCase.cancel(userId, applicationId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.APPLICATION_CANCELED));
     }
 
     @GetMapping("/api/v1/projects/{projectId}/applications")
-    @Operation(summary = "프로젝트별 신청 목록 조회", description = "특정 프로젝트에 들어온 팀원 신청 목록을 조회합니다. 신청 상태 및 생성 시간이 포함됩니다.")
+    @Operation(summary = "프로젝트별 신청 목록 조회", description = "특정 프로젝트에 들어온 팀원 신청 목록을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "프로젝트 없음")
+            @ApiResponse(responseCode = "200", description = "조회 성공")
     })
     public ResponseEntity<CommonResponse<List<TeamApplicationResponse>>> getByProject(
             @Parameter(description = "프로젝트 ID") @PathVariable Long projectId
@@ -97,13 +97,12 @@ public class TeamApplicationController {
     }
 
     @GetMapping("/api/v1/applications/my")
-    @Operation(summary = "내 신청 목록 조회", description = "내가 신청한 팀원 신청 목록을 조회합니다. 신청 상태 및 생성 시간이 포함됩니다.")
+    @Operation(summary = "내 신청 목록 조회", description = "내가 신청한 팀원 신청 목록을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "유저 없음")
+            @ApiResponse(responseCode = "200", description = "조회 성공")
     })
     public ResponseEntity<CommonResponse<List<TeamApplicationResponse>>> getMyApplications(
-            @Parameter(description = "유저 ID (임시 - JWT 연동 전)") @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         List<TeamApplicationResponse> responses = getTeamApplicationListUseCase.getByUser(userId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.APPLICATION_LIST_FOUND, responses));
