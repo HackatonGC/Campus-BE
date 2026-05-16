@@ -17,6 +17,7 @@ public class TeamApplicationMapper {
                 project != null ? project.getTechStacks() : null,
                 project != null ? project.getStatus() : null,
                 project != null ? project.getUser().getName() : null,
+                teamApplication.getRecruitmentId(),
                 teamApplication.getRole(),
                 teamApplication.getMessage(),
                 teamApplication.getStatus(),

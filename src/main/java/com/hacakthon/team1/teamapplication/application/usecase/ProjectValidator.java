@@ -1,18 +1,30 @@
 package com.hacakthon.team1.teamapplication.application.usecase;
 
+import com.hacakthon.team1.project.domain.entity.Project;
+import com.hacakthon.team1.project.domain.entity.ProjectStatus;
+import com.hacakthon.team1.project.domain.service.ProjectQueryService;
 import com.hacakthon.team1.teamapplication.application.exception.ProjectNotFoundException;
+import com.hacakthon.team1.teamapplication.application.exception.ProjectNotRecruitingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ProjectValidator {
 
-    public void validateProjectExists(Long projectId) {
-        if (projectId == null || projectId <= 0) {
+    private final ProjectQueryService projectQueryService;
+
+    public Project validateProjectExists(Long projectId) {
+        try {
+            return projectQueryService.findById(projectId);
+        } catch (Exception e) {
             throw new ProjectNotFoundException();
         }
     }
 
-    public void validateProjectRecruiting(Long projectId) {
-        // TODO: Project Entity 연동 후 실제 모집 상태 검증으로 교체
+    public void validateProjectRecruiting(Project project) {
+        if (project.getStatus() != ProjectStatus.RECRUITING) {
+            throw new ProjectNotRecruitingException();
+        }
     }
 }

@@ -16,6 +16,7 @@ public record TeamApplicationResponse(
         List<String> techStacks,
         ProjectStatus projectStatus,
         String projectAuthorName,
+        Long recruitmentId,
         String role,
         String message,
         ApplicationStatus status,
