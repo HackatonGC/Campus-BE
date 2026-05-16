@@ -42,12 +42,16 @@ public class JwtProvider {
     }
 
     public Long extractUserId(String token) {
-        return Jwts.parser()
+        Object value = Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("userId", Long.class);
+                .get("userId");
+        if (value instanceof Long l) return l;
+        if (value instanceof Integer i) return i.longValue();
+        if (value instanceof Number n) return n.longValue();
+        return null;
     }
 
     public boolean isValid(String token) {
