@@ -38,12 +38,13 @@ public class ProjectController {
     }
 
     @GetMapping
-    @Operation(summary = "프로젝트 목록 조회 (검색/필터)")
+    @Operation(summary = "프로젝트 목록 조회 (검색/필터/정렬)")
     public ResponseEntity<CommonResponse<List<ProjectSummaryResponse>>> getList(
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String techStack,
-            @RequestParam(defaultValue = "false") boolean recruitingOnly) {
-        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStack, recruitingOnly);
+            @RequestParam(defaultValue = "false") boolean recruitingOnly,
+            @RequestParam(defaultValue = "latest") String sort) {
+        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStack, recruitingOnly, sort);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_LIST_FOUND, response));
     }
 

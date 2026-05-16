@@ -24,7 +24,11 @@ public class ProjectQueryService {
         return projectRepository.findAll();
     }
 
-    public List<Project> search(String keyword, String techStack, boolean recruitingOnly) {
+    public List<Project> search(String keyword, String techStack, boolean recruitingOnly, String sort) {
+        java.util.Comparator<Project> comparator = "popular".equalsIgnoreCase(sort)
+                ? java.util.Comparator.comparingInt(Project::getLikeCount).reversed()
+                : java.util.Comparator.comparing(Project::getCreatedAt).reversed();
+
         return projectRepository.findAll().stream()
                 .filter(p -> keyword == null || keyword.isBlank() ||
                         normalize(p.getTitle()).contains(normalize(keyword)) ||
@@ -32,6 +36,7 @@ public class ProjectQueryService {
                 .filter(p -> techStack == null || techStack.isBlank() ||
                         p.getTechStacks().contains(techStack))
                 .filter(p -> !recruitingOnly || p.getStatus() == com.hacakthon.team1.project.domain.entity.ProjectStatus.RECRUITING)
+                .sorted(comparator)
                 .toList();
     }
 
