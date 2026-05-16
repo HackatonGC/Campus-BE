@@ -23,6 +23,7 @@ public enum ErrorCode {
     LIKE_NOT_FOUND(HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다."),
     PROJECT_NOT_RECRUITING(HttpStatus.BAD_REQUEST, "모집 중인 프로젝트가 아닙니다."),
     REVIEW_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 요청입니다."),
+    REVIEW_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 코드 리뷰 답변입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류가 발생했습니다.");
