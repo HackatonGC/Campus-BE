@@ -22,6 +22,7 @@ public enum ResponseMessage {
     PROJECT_CREATED(201, "프로젝트가 등록되었습니다."),
     PROJECT_FOUND(200, "프로젝트 조회에 성공했습니다."),
     PROJECT_LIST_FOUND(200, "프로젝트 목록 조회에 성공했습니다."),
+    PROJECT_POPULAR_TAGS_FOUND(200, "인기 태그 조회에 성공했습니다."),
     PROJECT_DELETED(200, "프로젝트가 삭제되었습니다."),
 
     BOOKMARK_ADDED(201, "북마크가 추가되었습니다."),

@@ -38,10 +38,21 @@ public class ProjectController {
     }
 
     @GetMapping
-    @Operation(summary = "프로젝트 목록 조회")
-    public ResponseEntity<CommonResponse<List<ProjectSummaryResponse>>> getList() {
-        List<ProjectSummaryResponse> response = getProjectListUseCase.getList();
+    @Operation(summary = "프로젝트 목록 조회 (검색/필터)")
+    public ResponseEntity<CommonResponse<List<ProjectSummaryResponse>>> getList(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String techStack,
+            @RequestParam(defaultValue = "false") boolean recruitingOnly) {
+        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStack, recruitingOnly);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_LIST_FOUND, response));
+    }
+
+    @GetMapping("/popular-tags")
+    @Operation(summary = "인기 기술스택 태그 조회")
+    public ResponseEntity<CommonResponse<List<String>>> getPopularTags(
+            @RequestParam(defaultValue = "5") int limit) {
+        List<String> response = getProjectListUseCase.getPopularTags(limit);
+        return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_POPULAR_TAGS_FOUND, response));
     }
 
     @GetMapping("/{id}")
