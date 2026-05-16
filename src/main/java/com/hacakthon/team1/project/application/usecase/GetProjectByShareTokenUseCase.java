@@ -8,6 +8,8 @@ import com.hacakthon.team1.project.application.mapper.ProjectMapper;
 import com.hacakthon.team1.project.domain.entity.Project;
 import com.hacakthon.team1.project.domain.repository.ProjectRepository;
 import com.hacakthon.team1.project.domain.service.ProjectSaveService;
+import com.hacakthon.team1.bookmark.domain.repository.BookmarkRepository;
+import com.hacakthon.team1.like.domain.repository.LikeRepository;
 import com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus;
 import com.hacakthon.team1.teamapplication.domain.repository.TeamApplicationRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class GetProjectByShareTokenUseCase {
     private final ProjectSaveService projectSaveService;
     private final CommentRepository commentRepository;
     private final TeamApplicationRepository teamApplicationRepository;
+    private final LikeRepository likeRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     @Transactional
     public ProjectResponse get(String shareToken, Long userId) {
@@ -42,7 +46,9 @@ public class GetProjectByShareTokenUseCase {
                         r -> teamApplicationRepository.countByRecruitmentIdAndStatus(r.getId(), ApplicationStatus.ACCEPTED)
                 ));
         boolean isApplied = userId != null && teamApplicationRepository.existsByUserIdAndProjectId(userId, project.getId());
+        boolean isLiked = userId != null && likeRepository.existsByUserIdAndProjectId(userId, project.getId());
+        boolean isBookmarked = userId != null && bookmarkRepository.existsByUserIdAndProjectId(userId, project.getId());
 
-        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap, isApplied);
+        return ProjectMapper.toResponse(project, commentCount, totalApplicationCount, acceptedCountMap, isApplied, isLiked, isBookmarked);
     }
 }

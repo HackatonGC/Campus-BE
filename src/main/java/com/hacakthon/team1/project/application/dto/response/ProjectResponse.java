@@ -47,5 +47,7 @@ public record ProjectResponse(
         String authorName,
         String authorSchool,
         LocalDateTime createdAt,
-        boolean isApplied
+        boolean isApplied,
+        boolean isLiked,
+        boolean isBookmarked
 ) {}
