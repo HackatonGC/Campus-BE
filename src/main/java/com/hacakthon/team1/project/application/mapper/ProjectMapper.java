@@ -7,6 +7,7 @@ import com.hacakthon.team1.project.application.dto.response.TeamMemberResponse;
 import com.hacakthon.team1.project.domain.entity.Project;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProjectMapper {
 
@@ -34,9 +35,13 @@ public class ProjectMapper {
         );
     }
 
-    public static ProjectResponse toResponse(Project project, long commentCount, long totalApplicationCount) {
+    public static ProjectResponse toResponse(Project project, long commentCount, long totalApplicationCount,
+                                             Map<Long, Long> acceptedCountByRecruitmentId) {
         List<RecruitmentResponse> recruitments = project.getRecruitments().stream()
-                .map(r -> new RecruitmentResponse(r.getId(), r.getRole(), r.getCount(), r.getSkills(), r.getDescription()))
+                .map(r -> new RecruitmentResponse(
+                        r.getId(), r.getRole(), r.getCount(),
+                        acceptedCountByRecruitmentId.getOrDefault(r.getId(), 0L),
+                        r.getSkills(), r.getDescription()))
                 .toList();
 
         List<TeamMemberResponse> teamMembers = project.getTeamMembers().stream()

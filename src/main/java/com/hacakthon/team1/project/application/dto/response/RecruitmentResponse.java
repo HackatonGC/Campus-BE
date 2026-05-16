@@ -4,6 +4,7 @@ public record RecruitmentResponse(
         Long id,
         String role,
         int count,
+        long acceptedCount,
         String skills,
         String description
 ) {}

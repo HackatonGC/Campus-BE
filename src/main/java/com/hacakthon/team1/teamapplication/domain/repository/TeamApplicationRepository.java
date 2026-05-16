@@ -18,4 +18,6 @@ public interface TeamApplicationRepository extends JpaRepository<TeamApplication
     long countByUserIdAndStatus(Long userId, com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus status);
 
     long countByProjectIdAndStatus(Long projectId, com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus status);
+
+    long countByRecruitmentIdAndStatus(Long recruitmentId, com.hacakthon.team1.teamapplication.domain.entity.ApplicationStatus status);
 }

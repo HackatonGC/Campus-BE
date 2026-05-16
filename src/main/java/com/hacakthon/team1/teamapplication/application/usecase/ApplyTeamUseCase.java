@@ -1,10 +1,10 @@
 package com.hacakthon.team1.teamapplication.application.usecase;
 
+import com.hacakthon.team1.application.exception.BusinessException;
+import com.hacakthon.team1.application.exception.ErrorCode;
 import com.hacakthon.team1.project.domain.entity.Project;
 import com.hacakthon.team1.project.domain.entity.Recruitment;
 import com.hacakthon.team1.teamapplication.application.dto.request.TeamApplicationRequest;
-import com.hacakthon.team1.application.exception.BusinessException;
-import com.hacakthon.team1.application.exception.ErrorCode;
 import com.hacakthon.team1.teamapplication.application.exception.DuplicateApplicationException;
 import com.hacakthon.team1.teamapplication.application.exception.InvalidRecruitmentException;
 import com.hacakthon.team1.teamapplication.domain.entity.TeamApplication;
@@ -37,7 +37,7 @@ public class ApplyTeamUseCase {
         }
 
         Recruitment recruitment = project.getRecruitments().stream()
-                .filter(r -> r.getId().equals(request.recruitmentId()))
+                .filter(r -> r.getRole().equals(request.role()))
                 .findFirst()
                 .orElseThrow(InvalidRecruitmentException::new);
 
