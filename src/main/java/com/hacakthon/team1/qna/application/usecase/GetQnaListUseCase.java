@@ -21,10 +21,8 @@ public class GetQnaListUseCase {
     public List<QnaResponse> getList(String keyword, List<String> tags, String sort) {
         List<Qna> qnas = qnaQueryService.findAllByFilter(keyword, tags);
 
-        if ("likes".equals(sort)) {
+        if ("popular".equals(sort)) {
             qnas = qnas.stream().sorted(Comparator.comparingInt(Qna::getLikeCount).reversed()).toList();
-        } else if ("views".equals(sort)) {
-            qnas = qnas.stream().sorted(Comparator.comparingInt(Qna::getViewCount).reversed()).toList();
         } else {
             qnas = qnas.stream().sorted(Comparator.comparing(Qna::getCreatedAt).reversed()).toList();
         }
