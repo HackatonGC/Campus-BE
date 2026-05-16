@@ -16,9 +16,14 @@ public class GetProjectListUseCase {
     private final ProjectQueryService projectQueryService;
 
     @Transactional(readOnly = true)
-    public List<ProjectSummaryResponse> getList() {
-        return projectQueryService.findAll().stream()
+    public List<ProjectSummaryResponse> getList(String keyword, String techStack, boolean recruitingOnly) {
+        return projectQueryService.search(keyword, techStack, recruitingOnly).stream()
                 .map(ProjectMapper::toSummaryResponse)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getPopularTags(int limit) {
+        return projectQueryService.findPopularTechStacks(limit);
     }
 }
