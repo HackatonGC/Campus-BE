@@ -174,6 +174,10 @@ public class Project extends BaseEntity {
         this.messageToJuniors = messageToJuniors;
     }
 
+    public void updateStatus(ProjectStatus status) {
+        this.status = status;
+    }
+
     public void clearRecruitments() {
         this.recruitments.clear();
     }
