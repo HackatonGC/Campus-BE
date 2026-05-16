@@ -12,7 +12,8 @@ public class UserMapper {
                 user.getName(),
                 user.getSchool(),
                 user.getDepartment(),
-                user.getTechStacks()
+                user.getTechStacks(),
+                user.getCreatedAt()
         );
     }
 }
