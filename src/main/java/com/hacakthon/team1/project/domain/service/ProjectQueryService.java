@@ -24,12 +24,13 @@ public class ProjectQueryService {
         return projectRepository.findAll();
     }
 
-    public List<Project> search(String keyword, List<String> techStacks, com.hacakthon.team1.project.domain.entity.ProjectStatus status, String sort) {
+    public List<Project> search(String keyword, List<String> techStacks, com.hacakthon.team1.project.domain.entity.ProjectStatus status, String sort, Long authorId) {
         java.util.Comparator<Project> comparator = "popular".equalsIgnoreCase(sort)
                 ? java.util.Comparator.comparingInt(Project::getLikeCount).reversed()
                 : java.util.Comparator.comparing(Project::getCreatedAt).reversed();
 
         return projectRepository.findAll().stream()
+                .filter(p -> authorId == null || p.getUser().getId().equals(authorId))
                 .filter(p -> keyword == null || keyword.isBlank() ||
                         normalize(p.getTitle()).contains(normalize(keyword)) ||
                         p.getTechStacks().stream().anyMatch(t -> normalize(t).contains(normalize(keyword))))

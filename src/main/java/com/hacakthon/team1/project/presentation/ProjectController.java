@@ -52,8 +52,9 @@ public class ProjectController {
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) List<String> techStacks,
             @RequestParam(required = false) ProjectStatus status,
-            @RequestParam(defaultValue = "latest") String sort) {
-        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStacks, status, sort);
+            @RequestParam(defaultValue = "latest") String sort,
+            @RequestParam(required = false) Long authorId) {
+        List<ProjectSummaryResponse> response = getProjectListUseCase.getList(keyword, techStacks, status, sort, authorId);
         return ResponseEntity.ok(CommonResponse.success(ResponseMessage.PROJECT_LIST_FOUND, response));
     }
 
