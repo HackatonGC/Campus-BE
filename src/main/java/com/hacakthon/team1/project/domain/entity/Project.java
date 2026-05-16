@@ -93,6 +93,26 @@ public class Project extends BaseEntity {
         if (this.likeCount > 0) this.likeCount--;
     }
 
+    public void update(String title, String summary, String description, List<String> techStacks,
+                       ProjectStatus status, ProjectType projectType, String thumbnailUrl,
+                       String githubUrl, String deployUrl, String figmaUrl, String notionUrl) {
+        this.title = title;
+        this.summary = summary;
+        this.description = description;
+        this.techStacks = techStacks != null ? techStacks : new ArrayList<>();
+        this.status = status;
+        this.projectType = projectType;
+        this.thumbnailUrl = thumbnailUrl;
+        this.githubUrl = githubUrl;
+        this.deployUrl = deployUrl;
+        this.figmaUrl = figmaUrl;
+        this.notionUrl = notionUrl;
+    }
+
+    public void clearRecruitments() {
+        this.recruitments.clear();
+    }
+
     public void addRecruitment(Recruitment recruitment) {
         this.recruitments.add(recruitment);
     }

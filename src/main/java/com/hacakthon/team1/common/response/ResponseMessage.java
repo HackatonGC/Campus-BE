@@ -20,6 +20,7 @@ public enum ResponseMessage {
     USER_DELETED(200, "회원탈퇴가 완료되었습니다."),
 
     PROJECT_CREATED(201, "프로젝트가 등록되었습니다."),
+    PROJECT_UPDATED(200, "프로젝트가 수정되었습니다."),
     PROJECT_FOUND(200, "프로젝트 조회에 성공했습니다."),
     PROJECT_LIST_FOUND(200, "프로젝트 목록 조회에 성공했습니다."),
     PROJECT_POPULAR_TAGS_FOUND(200, "인기 태그 조회에 성공했습니다."),
@@ -52,7 +53,9 @@ public enum ResponseMessage {
     COMMENT_DELETED(200, "댓글이 삭제되었습니다."),
     COMMENT_LIST_FOUND(200, "댓글 목록 조회에 성공했습니다."),
     COMMENT_LIKED(201, "댓글 좋아요가 추가되었습니다."),
-    COMMENT_UNLIKED(200, "댓글 좋아요가 취소되었습니다.");
+    COMMENT_UNLIKED(200, "댓글 좋아요가 취소되었습니다."),
+
+    ACTIVITY_LIST_FOUND(200, "최근 활동 조회에 성공했습니다.");
 
     private final int status;
     private final String message;
