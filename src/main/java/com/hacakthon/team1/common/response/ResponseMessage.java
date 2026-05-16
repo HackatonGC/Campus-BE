@@ -26,6 +26,7 @@ public enum ResponseMessage {
     APPLICATION_LIST_FOUND(200, "신청 목록 조회에 성공했습니다."),
 
     REVIEW_REQUEST_CREATED(201, "코드 리뷰 요청이 완료되었습니다."),
+    REVIEW_REQUEST_FOUND(200, "코드 리뷰 요청 조회에 성공했습니다."),
     REVIEW_REQUEST_LIST_FOUND(200, "코드 리뷰 요청 목록 조회에 성공했습니다.");
 
     private final int status;
