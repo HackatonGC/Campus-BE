@@ -16,8 +16,8 @@ public class GetProjectListUseCase {
     private final ProjectQueryService projectQueryService;
 
     @Transactional(readOnly = true)
-    public List<ProjectSummaryResponse> getList(String keyword, String techStack, boolean recruitingOnly, String sort) {
-        return projectQueryService.search(keyword, techStack, recruitingOnly, sort).stream()
+    public List<ProjectSummaryResponse> getList(String keyword, List<String> techStacks, boolean recruitingOnly, String sort) {
+        return projectQueryService.search(keyword, techStacks, recruitingOnly, sort).stream()
                 .map(ProjectMapper::toSummaryResponse)
                 .toList();
     }
